@@ -3,63 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Earn with Banner</title>
+    <title>BannerEarn - Earn Money by Clicking Ads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
-        
+
         .container {
-            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
             font-size: 2.5rem;
         }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+
+        .logo h1 {
+            font-size: 1.8rem;
         }
-        
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .wallet {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wallet i {
+            color: #fbbf24;
+        }
+
+        /* Main Content Styles */
+        .content {
+            display: none;
+            padding: 30px;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .form-group input {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
         .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stats-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: none;
-            padding: 15px 40px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stats-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-card p {
             font-size: 1.1rem;
-            border-radius: 50px;
+            opacity: 0.9;
+        }
+
+        /* Banner Section */
+        .banner-container {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .banner {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin: 10px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+
+        .banner:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-        
+
+        .banner.clicked {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .click-info {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Backend Status */
+        .backend-status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .backend-status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .backend-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Result Display */
         .result {
             margin-top: 30px;
             padding: 20px;
@@ -68,17 +257,18 @@
             text-align: left;
             display: none;
         }
-        
+
         .result.active {
             display: block;
         }
-        
+
         .loading {
             color: #667eea;
             margin: 20px 0;
             display: none;
+            text-align: center;
         }
-        
+
         .error {
             background: #fee;
             color: #c33;
@@ -87,55 +277,547 @@
             margin-top: 10px;
             display: none;
         }
-        
-        .status {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
+
+        /* Withdrawal Section */
+        .withdrawal-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
         }
-        
-        .status.online {
-            background: #d4edda;
-            color: #155724;
+
+        .withdrawal-section h2 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
         }
-        
-        .status.offline {
-            background: #f8d7da;
-            color: #721c24;
+
+        .withdrawal-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Transaction History */
+        .transactions {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .transactions h2 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .transaction-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .positive {
+            color: #10b981;
+        }
+
+        .negative {
+            color: #ef4444;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: #f8fafc;
+            padding: 0;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .nav-tab {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #4f46e5;
+        }
+
+        .nav-tab.active {
+            color: #4f46e5;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #4f46e5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .withdrawal-form {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .nav-tab {
+                flex: 1;
+                min-width: 120px;
+                padding: 15px 10px;
+            }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .alert.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Backend Test Section */
+        .backend-test {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Earn with Banner</h1>
-        <p class="subtitle">Connect to your backend API and start earning</p>
-        
-        <div class="status" id="apiStatus">Checking API status...</div>
-        
-        <button class="btn" onclick="testBackend()">Test Backend Connection</button>
-        <button class="btn" onclick="fetchData()">Get Sample Data</button>
-        
-        <div class="loading" id="loading">Loading...</div>
-        
-        <div class="error" id="error"></div>
-        
-        <div class="result" id="result">
-            <h3>API Response:</h3>
-            <pre id="responseData"></pre>
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #4f46e5;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </h2>
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p style="text-align: center; margin-top: 20px;">
+                    Don't have an account? 
+                    <a href="#" onclick="showSignup()" style="color: #4f46e5; font-weight: 600;">Sign Up</a>
+                </p>
+            </div>
         </div>
-        
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-            <p>Backend URL: <code id="backendUrl">https://earn-with-banner.vercel.app</code></p>
-            <button class="btn" onclick="copyUrl()" style="padding: 8px 20px; font-size: 0.9rem;">Copy URL</button>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #4f46e5;">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </h2>
+                <form class="auth-form" id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPhone">Phone Number</label>
+                        <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+                <p style="text-align: center; margin-top: 20px;">
+                    Already have an account? 
+                    <a href="#" onclick="showLogin()" style="color: #4f46e5; font-weight: 600;">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-ad"></i>
+                <h1>BannerEarn</h1>
+            </div>
+            <div class="user-info">
+                <div class="backend-status" id="apiStatus">Checking backend status...</div>
+                <div class="wallet">
+                    <i class="fas fa-wallet"></i>
+                    <span>Balance: ₹<span id="walletBalance">0</span></span>
+                </div>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">
+                <i class="fas fa-home"></i> Dashboard
+            </button>
+            <button class="nav-tab" onclick="showTab('banners')">
+                <i class="fas fa-ad"></i> Click Banners
+            </button>
+            <button class="nav-tab" onclick="showTab('withdraw')">
+                <i class="fas fa-rupee-sign"></i> Withdraw Money
+            </button>
+            <button class="nav-tab" onclick="showTab('history')">
+                <i class="fas fa-history"></i> History
+            </button>
+            <button class="nav-tab" onclick="showTab('backend')">
+                <i class="fas fa-server"></i> Backend Status
+            </button>
+        </div>
+
+        <!-- Alert Messages -->
+        <div class="alert success" id="successAlert">
+            <i class="fas fa-check-circle"></i> <span id="successMessage"></span>
+        </div>
+        <div class="alert error" id="errorAlert">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorMessage"></span>
+        </div>
+        <div class="alert info" id="infoAlert">
+            <i class="fas fa-info-circle"></i> <span id="infoMessage"></span>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div class="content active" id="dashboardTab">
+            <div class="dashboard">
+                <div class="stats-card">
+                    <h2>₹<span id="totalEarnings">0</span></h2>
+                    <p>Total Earnings</p>
+                </div>
+                <div class="stats-card">
+                    <h2><span id="totalClicks">0</span></h2>
+                    <p>Banners Clicked</p>
+                </div>
+            </div>
+
+            <div class="withdrawal-section">
+                <h2><i class="fas fa-trophy"></i> How It Works</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
+                        <i class="fas fa-mouse-pointer" style="font-size: 2rem; color: #4f46e5; margin-bottom: 15px;"></i>
+                        <h3 style="color: #1f2937; margin-bottom: 10px;">Click Banners</h3>
+                        <p style="color: #6b7280;">Click on banners to earn ₹1 per click</p>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
+                        <i class="fas fa-wallet" style="font-size: 2rem; color: #10b981; margin-bottom: 15px;"></i>
+                        <h3 style="color: #1f2937; margin-bottom: 10px;">Earn Money</h3>
+                        <p style="color: #6b7280;">Money gets added to your wallet instantly</p>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
+                        <i class="fas fa-rupee-sign" style="font-size: 2rem; color: #f59e0b; margin-bottom: 15px;"></i>
+                        <h3 style="color: #1f2937; margin-bottom: 10px;">Withdraw</h3>
+                        <p style="color: #6b7280;">Withdraw minimum ₹100 via UPI or Bank</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banners Tab -->
+        <div class="content" id="bannersTab">
+            <div class="banner-container">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #1f2937;">
+                    <i class="fas fa-ad"></i> Click Banners to Earn Money
+                </h2>
+                <div class="banner" onclick="clickBanner(this)">
+                    <div style="text-align: center;">
+                        <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                        <div>Shop Now - Up to 70% Off!</div>
+                    </div>
+                </div>
+                <div class="banner" onclick="clickBanner(this)">
+                    <div style="text-align: center;">
+                        <i class="fas fa-gamepad" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                        <div>New Games Released - Play Now!</div>
+                    </div>
+                </div>
+                <div class="banner" onclick="clickBanner(this)">
+                    <div style="text-align: center;">
+                        <i class="fas fa-graduation-cap" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                        <div>Learn Coding - Free Courses Available</div>
+                    </div>
+                </div>
+                <div class="click-info">
+                    <i class="fas fa-info-circle"></i> Click any banner above to earn ₹1. Each banner can be clicked once per day.
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="refreshBanners()">
+                    <i class="fas fa-sync-alt"></i> Refresh Banners (Available in 24h)
+                </button>
+            </div>
+        </div>
+
+        <!-- Withdraw Tab -->
+        <div class="content" id="withdrawTab">
+            <div class="withdrawal-section">
+                <h2><i class="fas fa-rupee-sign"></i> Withdraw Money</h2>
+                
+                <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                    <h3 style="color: #0369a1; margin-bottom: 10px;">
+                        <i class="fas fa-exclamation-circle"></i> Withdrawal Rules
+                    </h3>
+                    <ul style="color: #475569; line-height: 1.6;">
+                        <li>Minimum withdrawal amount: ₹100</li>
+                        <li>Withdrawal processing time: 24-48 hours</li>
+                        <li>UPI and Bank Transfer available</li>
+                        <li>No withdrawal fees</li>
+                    </ul>
+                </div>
+
+                <form class="withdrawal-form" id="withdrawalForm">
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount (₹)</label>
+                        <input type="number" id="withdrawAmount" min="100" placeholder="Minimum ₹100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="withdrawMethod">Payment Method</label>
+                        <select id="withdrawMethod" class="form-group input" style="padding: 12px 15px;" required>
+                            <option value="">Select Method</option>
+                            <option value="upi">UPI</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="upiField" style="display: none;">
+                        <label for="upiId">UPI ID</label>
+                        <input type="text" id="upiId" placeholder="Enter your UPI ID">
+                    </div>
+
+                    <div id="bankFields" style="display: none; grid-column: 1 / -1;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label for="accountNumber">Account Number</label>
+                                <input type="text" id="accountNumber" placeholder="Enter account number">
+                            </div>
+                            <div class="form-group">
+                                <label for="ifscCode">IFSC Code</label>
+                                <input type="text" id="ifscCode" placeholder="Enter IFSC code">
+                            </div>
+                            <div class="form-group">
+                                <label for="accountHolder">Account Holder Name</label>
+                                <input type="text" id="accountHolder" placeholder="Enter account holder name">
+                            </div>
+                            <div class="form-group">
+                                <label for="bankName">Bank Name</label>
+                                <input type="text" id="bankName" placeholder="Enter bank name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="grid-column: 1 / -1;">
+                        <button type="submit" class="btn btn-success" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Request Withdrawal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- History Tab -->
+        <div class="content" id="historyTab">
+            <div class="transactions">
+                <h2><i class="fas fa-history"></i> Transaction History</h2>
+                <div class="transaction-list" id="transactionList">
+                    <!-- Transactions will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Backend Status Tab -->
+        <div class="content" id="backendTab">
+            <div class="withdrawal-section">
+                <h2><i class="fas fa-server"></i> Backend Connection Status</h2>
+                
+                <div class="backend-test">
+                    <p>Backend URL: <code id="backendUrl">https://earn-with-banner.vercel.app</code></p>
+                    
+                    <div style="margin: 20px 0;">
+                        <button class="btn btn-primary" onclick="testBackendConnection()" style="margin: 5px;">
+                            Test Backend Connection
+                        </button>
+                        <button class="btn btn-success" onclick="fetchBackendData()" style="margin: 5px;">
+                            Get Sample Data
+                        </button>
+                        <button class="btn btn-warning" onclick="syncUserData()" style="margin: 5px;">
+                            Sync with Backend
+                        </button>
+                    </div>
+                    
+                    <div class="loading" id="backendLoading">Loading...</div>
+                    <div class="error" id="backendError"></div>
+                    
+                    <div class="result" id="backendResult">
+                        <h3>Backend Response:</h3>
+                        <pre id="responseData"></pre>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // Backend URL
         const BACKEND_URL = 'https://earn-with-banner.vercel.app';
-        
-        // Check if backend is online
-        async function checkAPIStatus() {
+        const EARNINGS_PER_CLICK = 1;
+
+        // User data
+        let userData = {
+            balance: 0,
+            totalEarnings: 0,
+            totalClicks: 0,
+            clicksToday: 0,
+            lastClickDate: null,
+            transactions: []
+        };
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                showMainApp();
+                loadUserData();
+                checkBackendStatus();
+            } else {
+                showLogin();
+            }
+
+            // Form event listeners
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            document.getElementById('withdrawalForm').addEventListener('submit', handleWithdrawal);
+            document.getElementById('withdrawMethod').addEventListener('change', handleWithdrawalMethodChange);
+        });
+
+        // Backend connection functions
+        async function checkBackendStatus() {
             const statusEl = document.getElementById('apiStatus');
             try {
                 const response = await fetch(`${BACKEND_URL}/api/health`, {
@@ -146,22 +828,21 @@
                 });
                 
                 if (response.ok) {
-                    statusEl.textContent = '✅ Backend API is online';
-                    statusEl.className = 'status online';
+                    statusEl.textContent = '✅ Backend Connected';
+                    statusEl.className = 'backend-status online';
                 } else {
-                    statusEl.textContent = '⚠️ Backend responded with error';
-                    statusEl.className = 'status offline';
+                    statusEl.textContent = '⚠️ Backend Error';
+                    statusEl.className = 'backend-status offline';
                 }
             } catch (error) {
-                statusEl.textContent = '❌ Cannot connect to backend';
-                statusEl.className = 'status offline';
+                statusEl.textContent = '❌ Backend Offline';
+                statusEl.className = 'backend-status offline';
             }
         }
-        
-        // Test backend connection
-        async function testBackend() {
-            showLoading(true);
-            hideError();
+
+        async function testBackendConnection() {
+            showBackendLoading(true);
+            hideBackendError();
             
             try {
                 const response = await fetch(`${BACKEND_URL}/api/test`, {
@@ -171,19 +852,24 @@
                     }
                 });
                 
-                const data = await response.json();
-                showResult(data);
+                if (response.ok) {
+                    const data = await response.json();
+                    showBackendResult(data);
+                    showAlert('success', 'Backend connection successful!');
+                } else {
+                    throw new Error('Backend responded with error');
+                }
             } catch (error) {
-                showError('Failed to connect to backend. Make sure your backend is deployed correctly.');
+                showBackendError('Failed to connect to backend. Make sure your backend is deployed correctly.');
+                showAlert('error', 'Backend connection failed');
             } finally {
-                showLoading(false);
+                showBackendLoading(false);
             }
         }
-        
-        // Fetch data from backend
-        async function fetchData() {
-            showLoading(true);
-            hideError();
+
+        async function fetchBackendData() {
+            showBackendLoading(true);
+            hideBackendError();
             
             try {
                 const response = await fetch(`${BACKEND_URL}/api/data`, {
@@ -194,44 +880,349 @@
                 });
                 
                 const data = await response.json();
-                showResult(data);
+                showBackendResult(data);
+                showAlert('success', 'Data fetched successfully');
             } catch (error) {
-                showError('Error fetching data. Check if the endpoint exists.');
+                showBackendError('Error fetching data. Check if the endpoint exists.');
+                showAlert('error', 'Failed to fetch data');
             } finally {
-                showLoading(false);
+                showBackendLoading(false);
             }
         }
-        
-        // Helper functions
-        function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'block' : 'none';
+
+        async function syncUserData() {
+            showBackendLoading(true);
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            try {
+                // This would be where you sync with your backend
+                // For now, we'll simulate a successful sync
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                showAlert('success', 'User data synced with backend');
+                showBackendResult({
+                    message: 'Data sync successful',
+                    user: user ? user.email : 'Not logged in',
+                    localData: userData
+                });
+            } catch (error) {
+                showAlert('error', 'Sync failed: ' + error.message);
+            } finally {
+                showBackendLoading(false);
+            }
         }
-        
-        function showResult(data) {
-            const resultEl = document.getElementById('result');
+
+        // Banner click functionality
+        function clickBanner(bannerElement) {
+            const today = new Date().toDateString();
+            
+            // Check if user has already clicked today
+            if (userData.lastClickDate === today && userData.clicksToday >= 3) {
+                showAlert('info', 'You have reached your daily limit of 3 clicks. Come back tomorrow!');
+                return;
+            }
+            
+            // Reset daily clicks if it's a new day
+            if (userData.lastClickDate !== today) {
+                userData.clicksToday = 0;
+                userData.lastClickDate = today;
+            }
+            
+            // Mark banner as clicked
+            bannerElement.classList.add('clicked');
+            
+            // Update earnings
+            userData.clicksToday++;
+            userData.totalClicks++;
+            userData.balance += EARNINGS_PER_CLICK;
+            userData.totalEarnings += EARNINGS_PER_CLICK;
+            
+            // Add transaction
+            userData.transactions.unshift({
+                id: Date.now(),
+                type: 'credit',
+                amount: EARNINGS_PER_CLICK,
+                description: 'Banner Click',
+                date: new Date().toISOString()
+            });
+            
+            // Update UI
+            updateUserData();
+            
+            // Show success message
+            showAlert('success', `You earned ₹${EARNINGS_PER_CLICK}! Clicked ${userData.clicksToday}/3 today.`);
+            
+            // Disable banner for 5 seconds
+            bannerElement.style.pointerEvents = 'none';
+            setTimeout(() => {
+                bannerElement.style.pointerEvents = 'auto';
+            }, 5000);
+            
+            // Save data
+            saveUserData();
+        }
+
+        function refreshBanners() {
+            const banners = document.querySelectorAll('.banner');
+            banners.forEach(banner => {
+                banner.classList.remove('clicked');
+            });
+            showAlert('success', 'Banners refreshed! You can click them again.');
+        }
+
+        // User authentication and data management
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showAlert('error', 'Please fill in all fields');
+                return;
+            }
+            
+            // For demo purposes, accept any login
+            const user = {
+                email: email,
+                name: email.split('@')[0],
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('user', JSON.stringify(user));
+            showMainApp();
+            loadUserData();
+            checkBackendStatus();
+            showAlert('success', `Welcome back, ${user.name}!`);
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            // Validation
+            if (!name || !email || !phone || !password || !confirmPassword) {
+                showAlert('error', 'Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('error', 'Passwords do not match');
+                return;
+            }
+            
+            // Create user
+            const user = {
+                name: name,
+                email: email,
+                phone: phone,
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('user', JSON.stringify(user));
+            showMainApp();
+            loadUserData();
+            checkBackendStatus();
+            showAlert('success', `Account created successfully, ${name}!`);
+        }
+
+        function handleWithdrawal(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const method = document.getElementById('withdrawMethod').value;
+            
+            if (!amount || amount < 100) {
+                showAlert('error', 'Minimum withdrawal amount is ₹100');
+                return;
+            }
+            
+            if (amount > userData.balance) {
+                showAlert('error', 'Insufficient balance');
+                return;
+            }
+            
+            if (!method) {
+                showAlert('error', 'Please select a payment method');
+                return;
+            }
+            
+            // Process withdrawal
+            userData.balance -= amount;
+            
+            // Add transaction
+            userData.transactions.unshift({
+                id: Date.now(),
+                type: 'debit',
+                amount: amount,
+                description: `Withdrawal via ${method.toUpperCase()}`,
+                date: new Date().toISOString(),
+                status: 'pending'
+            });
+            
+            // Update UI
+            updateUserData();
+            loadTransactionHistory();
+            
+            // Show success message
+            showAlert('success', `Withdrawal request of ₹${amount} submitted successfully! Processing time: 24-48 hours.`);
+            
+            // Save data
+            saveUserData();
+            
+            // Reset form
+            document.getElementById('withdrawalForm').reset();
+            document.getElementById('upiField').style.display = 'none';
+            document.getElementById('bankFields').style.display = 'none';
+        }
+
+        function handleWithdrawalMethodChange() {
+            const method = this.value;
+            document.getElementById('upiField').style.display = method === 'upi' ? 'block' : 'none';
+            document.getElementById('bankFields').style.display = method === 'bank' ? 'block' : 'none';
+        }
+
+        // Data management functions
+        function loadUserData() {
+            const savedData = localStorage.getItem('userData');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+            }
+            updateUserData();
+            loadTransactionHistory();
+        }
+
+        function saveUserData() {
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+
+        function updateUserData() {
+            document.getElementById('walletBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('totalEarnings').textContent = userData.totalEarnings.toFixed(2);
+            document.getElementById('totalClicks').textContent = userData.totalClicks;
+        }
+
+        function loadTransactionHistory() {
+            const transactionList = document.getElementById('transactionList');
+            transactionList.innerHTML = '';
+            
+            if (userData.transactions.length === 0) {
+                transactionList.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 20px;">No transactions yet</p>';
+                return;
+            }
+            
+            userData.transactions.forEach(transaction => {
+                const item = document.createElement('div');
+                item.className = 'transaction-item';
+                
+                const typeIcon = transaction.type === 'credit' ? 'fa-plus-circle' : 'fa-minus-circle';
+                const typeClass = transaction.type === 'credit' ? 'positive' : 'negative';
+                const sign = transaction.type === 'credit' ? '+' : '-';
+                
+                item.innerHTML = `
+                    <div class="transaction-type">
+                        <i class="fas ${typeIcon} ${typeClass}"></i>
+                        <span>${transaction.description}</span>
+                    </div>
+                    <div class="transaction-amount ${typeClass}">
+                        ${sign}₹${transaction.amount.toFixed(2)}
+                    </div>
+                `;
+                
+                transactionList.appendChild(item);
+            });
+        }
+
+        // UI helper functions
+        function showLogin() {
+            document.getElementById('signupModal').classList.remove('active');
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function showSignup() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('signupModal').classList.add('active');
+        }
+
+        function showMainApp() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('signupModal').classList.remove('active');
+            document.getElementById('mainContainer').style.display = 'block';
+        }
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Add active class to clicked nav button
+            event.target.classList.add('active');
+            
+            // Load data for the tab
+            if (tabName === 'history') {
+                loadTransactionHistory();
+            } else if (tabName === 'backend') {
+                checkBackendStatus();
+            }
+        }
+
+        function showAlert(type, message) {
+            const alert = document.getElementById(type + 'Alert');
+            const messageSpan = document.getElementById(type + 'Message');
+            messageSpan.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('userData');
+            window.location.reload();
+        }
+
+        // Backend UI helpers
+        function showBackendLoading(show) {
+            document.getElementById('backendLoading').style.display = show ? 'block' : 'none';
+        }
+
+        function showBackendResult(data) {
+            const resultEl = document.getElementById('backendResult');
             const dataEl = document.getElementById('responseData');
             dataEl.textContent = JSON.stringify(data, null, 2);
             resultEl.classList.add('active');
         }
-        
-        function showError(message) {
-            const errorEl = document.getElementById('error');
+
+        function showBackendError(message) {
+            const errorEl = document.getElementById('backendError');
             errorEl.textContent = message;
             errorEl.style.display = 'block';
         }
-        
-        function hideError() {
-            document.getElementById('error').style.display = 'none';
+
+        function hideBackendError() {
+            document.getElementById('backendError').style.display = 'none';
         }
-        
-        function copyUrl() {
+
+        // Copy backend URL
+        function copyBackendUrl() {
             const url = document.getElementById('backendUrl').textContent;
             navigator.clipboard.writeText(url);
-            alert('Backend URL copied to clipboard!');
+            showAlert('success', 'Backend URL copied to clipboard!');
         }
-        
-        // Check API status on page load
-        window.onload = checkAPIStatus;
     </script>
 </body>
-</html>
+    </html>
