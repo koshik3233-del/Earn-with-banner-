@@ -108,7 +108,7 @@
             color: #4b5563;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             padding: 12px 15px;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
@@ -116,7 +116,7 @@
             transition: all 0.3s;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: #4f46e5;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
@@ -485,6 +485,42 @@
             margin-top: 30px;
             text-align: center;
         }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .admin-panel h3 {
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        .admin-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        /* Game Elements */
+        .game-bonus {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .game-bonus:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -510,44 +546,11 @@
                     Don't have an account? 
                     <a href="#" onclick="showSignup()" style="color: #4f46e5; font-weight: 600;">Sign Up</a>
                 </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <div class="auth-container">
-                <h2 style="text-align: center; margin-bottom: 30px; color: #4f46e5;">
-                    <i class="fas fa-user-plus"></i> Sign Up
-                </h2>
-                <form class="auth-form" id="signupForm">
-                    <div class="form-group">
-                        <label for="signupName">Full Name</label>
-                        <input type="text" id="signupName" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupEmail">Email</label>
-                        <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupPhone">Phone Number</label>
-                        <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupPassword">Password</label>
-                        <input type="password" id="signupPassword" placeholder="Create a password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupConfirmPassword">Confirm Password</label>
-                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Account</button>
-                </form>
-                <p style="text-align: center; margin-top: 20px;">
-                    Already have an account? 
-                    <a href="#" onclick="showLogin()" style="color: #4f46e5; font-weight: 600;">Login</a>
-                </p>
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                    <p style="color: #6b7280; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> For demo, use any email/password
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -558,13 +561,12 @@
         <header>
             <div class="logo">
                 <i class="fas fa-ad"></i>
-                <h1>BannerEarn</h1>
+                <h1>BannerEarn Pro</h1>
             </div>
             <div class="user-info">
-                <div class="backend-status" id="apiStatus">Checking backend status...</div>
                 <div class="wallet">
                     <i class="fas fa-wallet"></i>
-                    <span>Balance: ₹<span id="walletBalance">0</span></span>
+                    <span>₹<span id="walletBalance">0</span></span>
                 </div>
                 <button class="btn btn-danger" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
@@ -577,17 +579,17 @@
             <button class="nav-tab active" onclick="showTab('dashboard')">
                 <i class="fas fa-home"></i> Dashboard
             </button>
-            <button class="nav-tab" onclick="showTab('banners')">
-                <i class="fas fa-ad"></i> Click Banners
+            <button class="nav-tab" onclick="showTab('earn')">
+                <i class="fas fa-ad"></i> Earn Money
             </button>
             <button class="nav-tab" onclick="showTab('withdraw')">
-                <i class="fas fa-rupee-sign"></i> Withdraw Money
+                <i class="fas fa-rupee-sign"></i> Withdraw
             </button>
             <button class="nav-tab" onclick="showTab('history')">
                 <i class="fas fa-history"></i> History
             </button>
-            <button class="nav-tab" onclick="showTab('backend')">
-                <i class="fas fa-server"></i> Backend Status
+            <button class="nav-tab" onclick="showTab('leaderboard')">
+                <i class="fas fa-trophy"></i> Leaderboard
             </button>
         </div>
 
@@ -615,99 +617,167 @@
                 </div>
             </div>
 
+            <!-- Daily Bonus -->
+            <div class="game-bonus" onclick="claimDailyBonus()" id="dailyBonus">
+                <h3><i class="fas fa-gift"></i> DAILY BONUS</h3>
+                <p id="bonusText">Click to claim your daily ₹10 bonus!</p>
+                <small id="bonusTime"></small>
+            </div>
+
+            <!-- Quick Stats -->
             <div class="withdrawal-section">
-                <h2><i class="fas fa-trophy"></i> How It Works</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <h2><i class="fas fa-chart-line"></i> Today's Stats</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
                     <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
-                        <i class="fas fa-mouse-pointer" style="font-size: 2rem; color: #4f46e5; margin-bottom: 15px;"></i>
-                        <h3 style="color: #1f2937; margin-bottom: 10px;">Click Banners</h3>
-                        <p style="color: #6b7280;">Click on banners to earn ₹1 per click</p>
+                        <h3 style="color: #4f46e5; font-size: 1.8rem;">₹<span id="todayEarnings">0</span></h3>
+                        <p style="color: #6b7280;">Earned Today</p>
                     </div>
                     <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
-                        <i class="fas fa-wallet" style="font-size: 2rem; color: #10b981; margin-bottom: 15px;"></i>
-                        <h3 style="color: #1f2937; margin-bottom: 10px;">Earn Money</h3>
-                        <p style="color: #6b7280;">Money gets added to your wallet instantly</p>
+                        <h3 style="color: #10b981; font-size: 1.8rem;"><span id="todayClicks">0</span>/10</h3>
+                        <p style="color: #6b7280;">Clicks Today</p>
                     </div>
                     <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 10px;">
-                        <i class="fas fa-rupee-sign" style="font-size: 2rem; color: #f59e0b; margin-bottom: 15px;"></i>
-                        <h3 style="color: #1f2937; margin-bottom: 10px;">Withdraw</h3>
-                        <p style="color: #6b7280;">Withdraw minimum ₹100 via UPI or Bank</p>
+                        <h3 style="color: #f59e0b; font-size: 1.8rem;" id="streakDays">0</h3>
+                        <p style="color: #6b7280;">Day Streak</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn btn-success" onclick="showTab('earn')" style="margin: 5px;">
+                    <i class="fas fa-bolt"></i> Start Earning Now
+                </button>
+                <button class="btn btn-primary" onclick="showTab('withdraw')" style="margin: 5px;">
+                    <i class="fas fa-rupee-sign"></i> Withdraw Money
+                </button>
             </div>
         </div>
 
-        <!-- Banners Tab -->
-        <div class="content" id="bannersTab">
+        <!-- Earn Money Tab -->
+        <div class="content" id="earnTab">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #1f2937;">
+                <i class="fas fa-money-bill-wave"></i> Click & Earn Money
+            </h2>
+
+            <!-- Banner Ads -->
             <div class="banner-container">
-                <h2 style="text-align: center; margin-bottom: 30px; color: #1f2937;">
-                    <i class="fas fa-ad"></i> Click Banners to Earn Money
-                </h2>
-                <div class="banner" onclick="clickBanner(this)">
+                <h3><i class="fas fa-ad"></i> Click these banners to earn ₹1 each</h3>
+                <p style="color: #64748b; margin-bottom: 20px;">Each banner can be clicked once per day</p>
+                
+                <div class="banner" onclick="clickBanner(this, 1)">
                     <div style="text-align: center;">
                         <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                        <div>Shop Now - Up to 70% Off!</div>
+                        <div>🛒 Mega Sale - Up to 80% Off!</div>
                     </div>
                 </div>
-                <div class="banner" onclick="clickBanner(this)">
+                <div class="banner" onclick="clickBanner(this, 2)">
                     <div style="text-align: center;">
                         <i class="fas fa-gamepad" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                        <div>New Games Released - Play Now!</div>
+                        <div>🎮 Free Games - Download Now!</div>
                     </div>
                 </div>
-                <div class="banner" onclick="clickBanner(this)">
+                <div class="banner" onclick="clickBanner(this, 3)">
                     <div style="text-align: center;">
                         <i class="fas fa-graduation-cap" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                        <div>Learn Coding - Free Courses Available</div>
+                        <div>📚 Online Courses - 50% Discount</div>
                     </div>
                 </div>
+                <div class="banner" onclick="clickBanner(this, 4)">
+                    <div style="text-align: center;">
+                        <i class="fas fa-music" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                        <div>🎵 Music Streaming - 3 Months Free</div>
+                    </div>
+                </div>
+                
                 <div class="click-info">
-                    <i class="fas fa-info-circle"></i> Click any banner above to earn ₹1. Each banner can be clicked once per day.
+                    <i class="fas fa-info-circle"></i> Daily limit: 10 clicks (₹10) | Bonus clicks available below
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-success" onclick="refreshBanners()">
-                    <i class="fas fa-sync-alt"></i> Refresh Banners (Available in 24h)
-                </button>
+
+            <!-- Bonus Activities -->
+            <div style="margin-top: 40px;">
+                <h3 style="color: #1f2937; margin-bottom: 20px;">
+                    <i class="fas fa-star"></i> Bonus Earnings
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-video" style="font-size: 2rem; color: #3b82f6; margin-bottom: 15px;"></i>
+                        <h4 style="color: #1e40af; margin-bottom: 10px;">Watch Video</h4>
+                        <p style="color: #475569; margin-bottom: 15px;">Watch a short video to earn ₹2</p>
+                        <button class="btn btn-primary" onclick="watchVideo()">
+                            <i class="fas fa-play"></i> Watch Now
+                        </button>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-tasks" style="font-size: 2rem; color: #10b981; margin-bottom: 15px;"></i>
+                        <h4 style="color: #065f46; margin-bottom: 10px;">Complete Survey</h4>
+                        <p style="color: #475569; margin-bottom: 15px;">Answer 5 questions to earn ₹5</p>
+                        <button class="btn btn-success" onclick="completeSurvey()">
+                            <i class="fas fa-clipboard-check"></i> Start Survey
+                        </button>
+                    </div>
+                    
+                    <div style="background: #fef3c7; padding: 20px; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-share-alt" style="font-size: 2rem; color: #f59e0b; margin-bottom: 15px;"></i>
+                        <h4 style="color: #92400e; margin-bottom: 10px;">Refer Friends</h4>
+                        <p style="color: #475569; margin-bottom: 15px;">Get ₹10 for each friend who joins</p>
+                        <button class="btn btn-warning" onclick="showReferral()">
+                            <i class="fas fa-user-plus"></i> Refer Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div style="margin-top: 40px; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color: #1f2937; margin-bottom: 15px;">
+                    <i class="fas fa-chart-bar"></i> Today's Progress
+                </h3>
+                <div style="background: #e5e7eb; height: 20px; border-radius: 10px; overflow: hidden;">
+                    <div id="progressBar" style="background: linear-gradient(90deg, #10b981, #059669); height: 100%; width: 0%; transition: width 0.5s;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: #6b7280;">
+                    <span>0/10 clicks</span>
+                    <span id="progressText">0% Complete</span>
+                    <span>₹10 goal</span>
+                </div>
             </div>
         </div>
 
         <!-- Withdraw Tab -->
         <div class="content" id="withdrawTab">
             <div class="withdrawal-section">
-                <h2><i class="fas fa-rupee-sign"></i> Withdraw Money</h2>
+                <h2><i class="fas fa-rupee-sign"></i> Withdraw Your Earnings</h2>
                 
-                <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-                    <h3 style="color: #0369a1; margin-bottom: 10px;">
-                        <i class="fas fa-exclamation-circle"></i> Withdrawal Rules
-                    </h3>
-                    <ul style="color: #475569; line-height: 1.6;">
-                        <li>Minimum withdrawal amount: ₹100</li>
-                        <li>Withdrawal processing time: 24-48 hours</li>
-                        <li>UPI and Bank Transfer available</li>
-                        <li>No withdrawal fees</li>
-                    </ul>
+                <!-- Balance Card -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 30px;">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Available Balance</h3>
+                    <h2 style="font-size: 3rem; margin-bottom: 15px;">₹<span id="withdrawBalance">0</span></h2>
+                    <p style="opacity: 0.9;">Minimum withdrawal: ₹100</p>
                 </div>
 
+                <!-- Withdrawal Form -->
                 <form class="withdrawal-form" id="withdrawalForm">
                     <div class="form-group">
                         <label for="withdrawAmount">Amount (₹)</label>
-                        <input type="number" id="withdrawAmount" min="100" placeholder="Minimum ₹100" required>
+                        <input type="number" id="withdrawAmount" min="100" placeholder="Enter amount" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="withdrawMethod">Payment Method</label>
-                        <select id="withdrawMethod" class="form-group input" style="padding: 12px 15px;" required>
+                        <select id="withdrawMethod" required>
                             <option value="">Select Method</option>
-                            <option value="upi">UPI</option>
+                            <option value="upi">UPI (Google Pay, PhonePe, Paytm)</option>
                             <option value="bank">Bank Transfer</option>
+                            <option value="paypal">PayPal</option>
                         </select>
                     </div>
 
                     <div class="form-group" id="upiField" style="display: none;">
                         <label for="upiId">UPI ID</label>
-                        <input type="text" id="upiId" placeholder="Enter your UPI ID">
+                        <input type="text" id="upiId" placeholder="username@bank">
                     </div>
 
                     <div id="bankFields" style="display: none; grid-column: 1 / -1;">
@@ -722,7 +792,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="accountHolder">Account Holder Name</label>
-                                <input type="text" id="accountHolder" placeholder="Enter account holder name">
+                                <input type="text" id="accountHolder" placeholder="Enter full name">
                             </div>
                             <div class="form-group">
                                 <label for="bankName">Bank Name</label>
@@ -731,12 +801,33 @@
                         </div>
                     </div>
 
-                    <div style="grid-column: 1 / -1;">
-                        <button type="submit" class="btn btn-success" style="width: 100%;">
+                    <div style="grid-column: 1 / -1; margin-top: 20px;">
+                        <button type="submit" class="btn btn-success" style="width: 100%; padding: 16px;">
                             <i class="fas fa-paper-plane"></i> Request Withdrawal
                         </button>
                     </div>
                 </form>
+
+                <!-- Payment Methods Info -->
+                <div style="margin-top: 40px; background: #f8fafc; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #1f2937; margin-bottom: 15px;">
+                        <i class="fas fa-info-circle"></i> Payment Information
+                    </h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <i class="fas fa-clock" style="color: #f59e0b; font-size: 1.5rem;"></i>
+                            <p style="color: #475569; margin-top: 10px;">Processing Time: 24-48 Hours</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem;"></i>
+                            <p style="color: #475569; margin-top: 10px;">No Withdrawal Fees</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-shield-alt" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                            <p style="color: #475569; margin-top: 10px;">Secure & Encrypted</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -744,299 +835,341 @@
         <div class="content" id="historyTab">
             <div class="transactions">
                 <h2><i class="fas fa-history"></i> Transaction History</h2>
+                
+                <!-- Filter Buttons -->
+                <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="btn" onclick="filterTransactions('all')" id="filterAll">All</button>
+                    <button class="btn" onclick="filterTransactions('credit')" id="filterCredit">Earnings</button>
+                    <button class="btn" onclick="filterTransactions('debit')" id="filterDebit">Withdrawals</button>
+                    <button class="btn" onclick="clearHistory()" style="margin-left: auto;">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+                
                 <div class="transaction-list" id="transactionList">
-                    <!-- Transactions will be loaded here -->
+                    <!-- Transactions loaded here -->
                 </div>
             </div>
         </div>
 
-        <!-- Backend Status Tab -->
-        <div class="content" id="backendTab">
+        <!-- Leaderboard Tab -->
+        <div class="content" id="leaderboardTab">
             <div class="withdrawal-section">
-                <h2><i class="fas fa-server"></i> Backend Connection Status</h2>
+                <h2><i class="fas fa-trophy"></i> Top Earners</h2>
                 
-                <div class="backend-test">
-                    <p>Backend URL: <code id="backendUrl">https://earn-with-banner.vercel.app</code></p>
-                    
-                    <div style="margin: 20px 0;">
-                        <button class="btn btn-primary" onclick="testBackendConnection()" style="margin: 5px;">
-                            Test Backend Connection
-                        </button>
-                        <button class="btn btn-success" onclick="fetchBackendData()" style="margin: 5px;">
-                            Get Sample Data
-                        </button>
-                        <button class="btn btn-warning" onclick="syncUserData()" style="margin: 5px;">
-                            Sync with Backend
-                        </button>
+                <div style="margin: 30px 0;">
+                    <!-- Top 3 Winners -->
+                    <div style="display: flex; justify-content: center; align-items: flex-end; gap: 30px; margin-bottom: 40px;">
+                        <!-- 2nd Place -->
+                        <div style="text-align: center;">
+                            <div style="background: #e5e7eb; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                                <i class="fas fa-user" style="font-size: 2rem; color: #6b7280;"></i>
+                            </div>
+                            <h3 style="color: #6b7280; margin-bottom: 5px;">₹850</h3>
+                            <p style="color: #9ca3af;">Alex</p>
+                        </div>
+                        
+                        <!-- 1st Place -->
+                        <div style="text-align: center;">
+                            <div style="background: #fef3c7; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 3px solid #f59e0b;">
+                                <i class="fas fa-crown" style="font-size: 2.5rem; color: #f59e0b;"></i>
+                            </div>
+                            <h3 style="color: #92400e; margin-bottom: 5px;">₹1,250</h3>
+                            <p style="color: #b45309;">You</p>
+                        </div>
+                        
+                        <!-- 3rd Place -->
+                        <div style="text-align: center;">
+                            <div style="background: #fde68a; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                                <i class="fas fa-user" style="font-size: 1.5rem; color: #b45309;"></i>
+                            </div>
+                            <h3 style="color: #92400e; margin-bottom: 5px;">₹720</h3>
+                            <p style="color: #b45309;">Sarah</p>
+                        </div>
                     </div>
                     
-                    <div class="loading" id="backendLoading">Loading...</div>
-                    <div class="error" id="backendError"></div>
-                    
-                    <div class="result" id="backendResult">
-                        <h3>Backend Response:</h3>
-                        <pre id="responseData"></pre>
+                    <!-- Leaderboard List -->
+                    <div id="leaderboardList">
+                        <!-- Dynamic leaderboard will be loaded here -->
                     </div>
+                </div>
+                
+                <!-- Your Position -->
+                <div style="background: linear-gradient(90deg, #4f46e5, #7c3aed); color: white; padding: 20px; border-radius: 15px; text-align: center;">
+                    <h3 style="margin-bottom: 10px;">Your Rank: <span id="userRank">1st</span></h3>
+                    <p>Total Earnings: ₹<span id="userTotal">0</span></p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Backend URL
-        const BACKEND_URL = 'https://earn-with-banner.vercel.app';
-        const EARNINGS_PER_CLICK = 1;
+        // SIMULATED BACKEND - No external server needed!
+        const SIMULATED_BACKEND = {
+            // In-memory database
+            users: {},
+            transactions: {},
+            
+            // Mock API endpoints
+            async health() {
+                return {
+                    status: 'healthy',
+                    service: 'BannerEarn-Simulated',
+                    timestamp: new Date().toISOString()
+                };
+            },
+            
+            async login(email, password) {
+                return {
+                    success: true,
+                    user: {
+                        email: email,
+                        name: email.split('@')[0],
+                        joined: new Date().toISOString()
+                    },
+                    token: 'simulated-token-' + Date.now()
+                };
+            },
+            
+            async register(userData) {
+                return {
+                    success: true,
+                    user: userData,
+                    message: 'Account created successfully'
+                };
+            },
+            
+            async processWithdrawal(userId, amount, method) {
+                return {
+                    success: true,
+                    transactionId: 'txn_' + Date.now(),
+                    amount: amount,
+                    method: method,
+                    status: 'pending',
+                    estimatedCompletion: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+                };
+            },
+            
+            async getStats(userId) {
+                return {
+                    totalEarnings: 1250,
+                    totalClicks: 245,
+                    streak: 7,
+                    rank: 1
+                };
+            }
+        };
 
-        // User data
+        // Application State
+        const EARNINGS_PER_CLICK = 1;
+        const DAILY_CLICK_LIMIT = 10;
+        const MIN_WITHDRAWAL = 100;
+        
         let userData = {
             balance: 0,
             totalEarnings: 0,
             totalClicks: 0,
             clicksToday: 0,
-            lastClickDate: null,
-            transactions: []
+            todayEarnings: 0,
+            streak: 0,
+            lastActiveDate: null,
+            transactions: [],
+            clickedBanners: {},
+            lastBonusClaim: null
         };
 
-        // Initialize the app
+        // Initialize Application
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is logged in
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (user) {
+            // Check for existing user
+            const savedUser = localStorage.getItem('user');
+            const savedData = localStorage.getItem('userData');
+            
+            if (savedUser && savedData) {
+                userData = JSON.parse(savedData);
                 showMainApp();
-                loadUserData();
-                checkBackendStatus();
+                updateUI();
+                setupDailyCheck();
             } else {
                 showLogin();
             }
 
-            // Form event listeners
+            // Setup form handlers
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            document.getElementById('signupForm').addEventListener('submit', handleSignup);
             document.getElementById('withdrawalForm').addEventListener('submit', handleWithdrawal);
             document.getElementById('withdrawMethod').addEventListener('change', handleWithdrawalMethodChange);
+            
+            // Initialize leaderboard
+            updateLeaderboard();
         });
 
-        // Backend connection functions
-        async function checkBackendStatus() {
-            const statusEl = document.getElementById('apiStatus');
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/health`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    statusEl.textContent = '✅ Backend Connected';
-                    statusEl.className = 'backend-status online';
-                } else {
-                    statusEl.textContent = '⚠️ Backend Error';
-                    statusEl.className = 'backend-status offline';
-                }
-            } catch (error) {
-                statusEl.textContent = '❌ Backend Offline';
-                statusEl.className = 'backend-status offline';
-            }
-        }
-
-        async function testBackendConnection() {
-            showBackendLoading(true);
-            hideBackendError();
-            
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/test`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    showBackendResult(data);
-                    showAlert('success', 'Backend connection successful!');
-                } else {
-                    throw new Error('Backend responded with error');
-                }
-            } catch (error) {
-                showBackendError('Failed to connect to backend. Make sure your backend is deployed correctly.');
-                showAlert('error', 'Backend connection failed');
-            } finally {
-                showBackendLoading(false);
-            }
-        }
-
-        async function fetchBackendData() {
-            showBackendLoading(true);
-            hideBackendError();
-            
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/data`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const data = await response.json();
-                showBackendResult(data);
-                showAlert('success', 'Data fetched successfully');
-            } catch (error) {
-                showBackendError('Error fetching data. Check if the endpoint exists.');
-                showAlert('error', 'Failed to fetch data');
-            } finally {
-                showBackendLoading(false);
-            }
-        }
-
-        async function syncUserData() {
-            showBackendLoading(true);
-            const user = JSON.parse(localStorage.getItem('user'));
-            
-            try {
-                // This would be where you sync with your backend
-                // For now, we'll simulate a successful sync
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                showAlert('success', 'User data synced with backend');
-                showBackendResult({
-                    message: 'Data sync successful',
-                    user: user ? user.email : 'Not logged in',
-                    localData: userData
-                });
-            } catch (error) {
-                showAlert('error', 'Sync failed: ' + error.message);
-            } finally {
-                showBackendLoading(false);
-            }
-        }
-
-        // Banner click functionality
-        function clickBanner(bannerElement) {
-            const today = new Date().toDateString();
-            
-            // Check if user has already clicked today
-            if (userData.lastClickDate === today && userData.clicksToday >= 3) {
-                showAlert('info', 'You have reached your daily limit of 3 clicks. Come back tomorrow!');
-                return;
-            }
-            
-            // Reset daily clicks if it's a new day
-            if (userData.lastClickDate !== today) {
-                userData.clicksToday = 0;
-                userData.lastClickDate = today;
-            }
-            
-            // Mark banner as clicked
-            bannerElement.classList.add('clicked');
-            
-            // Update earnings
-            userData.clicksToday++;
-            userData.totalClicks++;
-            userData.balance += EARNINGS_PER_CLICK;
-            userData.totalEarnings += EARNINGS_PER_CLICK;
-            
-            // Add transaction
-            userData.transactions.unshift({
-                id: Date.now(),
-                type: 'credit',
-                amount: EARNINGS_PER_CLICK,
-                description: 'Banner Click',
-                date: new Date().toISOString()
-            });
-            
-            // Update UI
-            updateUserData();
-            
-            // Show success message
-            showAlert('success', `You earned ₹${EARNINGS_PER_CLICK}! Clicked ${userData.clicksToday}/3 today.`);
-            
-            // Disable banner for 5 seconds
-            bannerElement.style.pointerEvents = 'none';
-            setTimeout(() => {
-                bannerElement.style.pointerEvents = 'auto';
-            }, 5000);
-            
-            // Save data
-            saveUserData();
-        }
-
-        function refreshBanners() {
-            const banners = document.querySelectorAll('.banner');
-            banners.forEach(banner => {
-                banner.classList.remove('clicked');
-            });
-            showAlert('success', 'Banners refreshed! You can click them again.');
-        }
-
-        // User authentication and data management
+        // Authentication
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            // Simple validation
             if (!email || !password) {
-                showAlert('error', 'Please fill in all fields');
+                showAlert('error', 'Please enter email and password');
                 return;
             }
             
-            // For demo purposes, accept any login
-            const user = {
-                email: email,
-                name: email.split('@')[0],
+            // Use simulated backend
+            SIMULATED_BACKEND.login(email, password)
+                .then(response => {
+                    if (response.success) {
+                        // Save user
+                        localStorage.setItem('user', JSON.stringify(response.user));
+                        
+                        // Initialize user data if first time
+                        if (!localStorage.getItem('userData')) {
+                            userData.balance = 50; // Starting bonus
+                            userData.totalEarnings = 50;
+                            saveUserData();
+                        }
+                        
+                        showMainApp();
+                        updateUI();
+                        setupDailyCheck();
+                        showAlert('success', `Welcome to BannerEarn, ${response.user.name}!`);
+                    }
+                });
+        }
+
+        function showSignup() {
+            // For demo, we'll auto-create account
+            const demoEmail = `user${Math.floor(Math.random() * 10000)}@example.com`;
+            const demoUser = {
+                email: demoEmail,
+                name: 'Demo User',
                 joined: new Date().toISOString()
             };
             
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(demoUser));
+            userData.balance = 100; // Starting bonus
+            userData.totalEarnings = 100;
+            saveUserData();
+            
             showMainApp();
-            loadUserData();
-            checkBackendStatus();
-            showAlert('success', `Welcome back, ${user.name}!`);
+            updateUI();
+            setupDailyCheck();
+            showAlert('success', 'Demo account created! Starting balance: ₹100');
         }
 
-        function handleSignup(e) {
-            e.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const phone = document.getElementById('signupPhone').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+        // Banner Click Function
+        function clickBanner(element, bannerId) {
+            const today = new Date().toDateString();
             
-            // Validation
-            if (!name || !email || !phone || !password || !confirmPassword) {
-                showAlert('error', 'Please fill in all fields');
+            // Check daily limit
+            if (userData.clicksToday >= DAILY_CLICK_LIMIT) {
+                showAlert('info', `Daily limit reached! You've earned ₹${userData.todayEarnings} today.`);
                 return;
             }
             
-            if (password !== confirmPassword) {
-                showAlert('error', 'Passwords do not match');
+            // Check if banner already clicked today
+            const lastClick = userData.clickedBanners[bannerId];
+            if (lastClick === today) {
+                showAlert('info', 'You already clicked this banner today');
                 return;
             }
             
-            // Create user
-            const user = {
-                name: name,
-                email: email,
-                phone: phone,
-                joined: new Date().toISOString()
-            };
+            // Process click
+            element.classList.add('clicked');
+            userData.clicksToday++;
+            userData.todayEarnings += EARNINGS_PER_CLICK;
+            userData.balance += EARNINGS_PER_CLICK;
+            userData.totalEarnings += EARNINGS_PER_CLICK;
+            userData.totalClicks++;
+            userData.clickedBanners[bannerId] = today;
             
-            localStorage.setItem('user', JSON.stringify(user));
-            showMainApp();
-            loadUserData();
-            checkBackendStatus();
-            showAlert('success', `Account created successfully, ${name}!`);
+            // Add transaction
+            addTransaction('credit', EARNINGS_PER_CLICK, `Banner Click #${bannerId}`);
+            
+            // Update UI
+            updateUI();
+            
+            // Show success
+            const remaining = DAILY_CLICK_LIMIT - userData.clicksToday;
+            showAlert('success', `+₹${EARNINGS_PER_CLICK}! ${remaining} clicks remaining today.`);
+            
+            // Disable for 2 seconds
+            element.style.pointerEvents = 'none';
+            setTimeout(() => {
+                element.style.pointerEvents = 'auto';
+            }, 2000);
         }
 
+        // Bonus Activities
+        function claimDailyBonus() {
+            const today = new Date().toDateString();
+            const lastClaim = userData.lastBonusClaim;
+            
+            if (lastClaim === today) {
+                showAlert('info', 'You already claimed your daily bonus today!');
+                return;
+            }
+            
+            // Calculate streak
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toDateString();
+            
+            if (lastClaim === yesterdayStr) {
+                userData.streak++;
+            } else if (lastClaim !== today) {
+                userData.streak = 1;
+            }
+            
+            // Calculate bonus (base ₹10 + streak bonus)
+            const bonusAmount = 10 + (userData.streak * 2);
+            
+            // Add bonus
+            userData.balance += bonusAmount;
+            userData.totalEarnings += bonusAmount;
+            userData.lastBonusClaim = today;
+            
+            // Add transaction
+            addTransaction('credit', bonusAmount, `Daily Bonus (${userData.streak} day streak)`);
+            
+            // Update UI
+            updateUI();
+            
+            // Show success
+            showAlert('success', `🎉 Daily Bonus: ₹${bonusAmount}! Streak: ${userData.streak} days`);
+        }
+
+        function watchVideo() {
+            const amount = 2;
+            userData.balance += amount;
+            userData.totalEarnings += amount;
+            addTransaction('credit', amount, 'Watch Video');
+            updateUI();
+            showAlert('success', `+₹${amount} for watching video!`);
+        }
+
+        function completeSurvey() {
+            const amount = 5;
+            userData.balance += amount;
+            userData.totalEarnings += amount;
+            addTransaction('credit', amount, 'Complete Survey');
+            updateUI();
+            showAlert('success', `+₹${amount} for completing survey!`);
+        }
+
+        function showReferral() {
+            const referralCode = 'BANNER' + Math.floor(Math.random() * 10000);
+            showAlert('info', `Your referral code: ${referralCode}. Share with friends to earn ₹10 each!`);
+        }
+
+        // Withdrawal System
         function handleWithdrawal(e) {
             e.preventDefault();
+            
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
             const method = document.getElementById('withdrawMethod').value;
             
-            if (!amount || amount < 100) {
-                showAlert('error', 'Minimum withdrawal amount is ₹100');
+            // Validation
+            if (!amount || amount < MIN_WITHDRAWAL) {
+                showAlert('error', `Minimum withdrawal amount is ₹${MIN_WITHDRAWAL}`);
                 return;
             }
             
@@ -1050,33 +1183,49 @@
                 return;
             }
             
-            // Process withdrawal
-            userData.balance -= amount;
+            // Additional validation for payment details
+            if (method === 'upi') {
+                const upiId = document.getElementById('upiId').value;
+                if (!upiId || !upiId.includes('@')) {
+                    showAlert('error', 'Please enter a valid UPI ID');
+                    return;
+                }
+            }
             
-            // Add transaction
-            userData.transactions.unshift({
-                id: Date.now(),
-                type: 'debit',
-                amount: amount,
-                description: `Withdrawal via ${method.toUpperCase()}`,
-                date: new Date().toISOString(),
-                status: 'pending'
-            });
+            if (method === 'bank') {
+                const accountNumber = document.getElementById('accountNumber').value;
+                const ifscCode = document.getElementById('ifscCode').value;
+                if (!accountNumber || !ifscCode) {
+                    showAlert('error', 'Please enter all bank details');
+                    return;
+                }
+            }
             
-            // Update UI
-            updateUserData();
-            loadTransactionHistory();
-            
-            // Show success message
-            showAlert('success', `Withdrawal request of ₹${amount} submitted successfully! Processing time: 24-48 hours.`);
-            
-            // Save data
-            saveUserData();
-            
-            // Reset form
-            document.getElementById('withdrawalForm').reset();
-            document.getElementById('upiField').style.display = 'none';
-            document.getElementById('bankFields').style.display = 'none';
+            // Process withdrawal with simulated backend
+            SIMULATED_BACKEND.processWithdrawal('user123', amount, method)
+                .then(response => {
+                    if (response.success) {
+                        // Update balance
+                        userData.balance -= amount;
+                        
+                        // Add transaction
+                        addTransaction('debit', amount, `Withdrawal via ${method}`, 'pending');
+                        
+                        // Update UI
+                        updateUI();
+                        
+                        // Show success
+                        showAlert('success', `Withdrawal request submitted for ₹${amount}. Transaction ID: ${response.transactionId}`);
+                        
+                        // Reset form
+                        document.getElementById('withdrawalForm').reset();
+                        document.getElementById('upiField').style.display = 'none';
+                        document.getElementById('bankFields').style.display = 'none';
+                        
+                        // Save data
+                        saveUserData();
+                    }
+                });
         }
 
         function handleWithdrawalMethodChange() {
@@ -1085,74 +1234,190 @@
             document.getElementById('bankFields').style.display = method === 'bank' ? 'block' : 'none';
         }
 
-        // Data management functions
-        function loadUserData() {
-            const savedData = localStorage.getItem('userData');
-            if (savedData) {
-                userData = JSON.parse(savedData);
+        // Transaction Management
+        function addTransaction(type, amount, description, status = 'completed') {
+            const transaction = {
+                id: 'txn_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                type: type,
+                amount: amount,
+                description: description,
+                date: new Date().toISOString(),
+                status: status
+            };
+            
+            userData.transactions.unshift(transaction);
+            
+            // Keep only last 50 transactions
+            if (userData.transactions.length > 50) {
+                userData.transactions = userData.transactions.slice(0, 50);
             }
-            updateUserData();
-            loadTransactionHistory();
+            
+            saveUserData();
         }
 
+        function filterTransactions(filter) {
+            const transactions = userData.transactions;
+            const listElement = document.getElementById('transactionList');
+            
+            let filtered = transactions;
+            if (filter !== 'all') {
+                filtered = transactions.filter(t => t.type === filter);
+            }
+            
+            // Update active filter button
+            document.querySelectorAll('#historyTab .btn').forEach(btn => btn.style.background = '');
+            event.target.style.background = '#e5e7eb';
+            
+            renderTransactions(filtered);
+        }
+
+        function renderTransactions(transactions) {
+            const listElement = document.getElementById('transactionList');
+            
+            if (transactions.length === 0) {
+                listElement.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #6b7280;">
+                        <i class="fas fa-receipt" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>No transactions found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            listElement.innerHTML = transactions.map(transaction => `
+                <div class="transaction-item">
+                    <div class="transaction-type">
+                        <i class="fas ${transaction.type === 'credit' ? 'fa-plus-circle positive' : 'fa-minus-circle negative'}"></i>
+                        <div>
+                            <div style="font-weight: 500;">${transaction.description}</div>
+                            <div style="font-size: 0.8rem; color: #6b7280;">
+                                ${new Date(transaction.date).toLocaleDateString()}
+                                ${transaction.status === 'pending' ? ' • ⏳ Pending' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="transaction-amount ${transaction.type === 'credit' ? 'positive' : 'negative'}">
+                        ${transaction.type === 'credit' ? '+' : '-'}₹${transaction.amount.toFixed(2)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all transaction history?')) {
+                userData.transactions = [];
+                saveUserData();
+                renderTransactions([]);
+                showAlert('info', 'Transaction history cleared');
+            }
+        }
+
+        // UI Updates
+        function updateUI() {
+            // Update all displayed values
+            document.getElementById('walletBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('totalEarnings').textContent = userData.totalEarnings.toFixed(2);
+            document.getElementById('totalClicks').textContent = userData.totalClicks;
+            document.getElementById('todayEarnings').textContent = userData.todayEarnings.toFixed(2);
+            document.getElementById('todayClicks').textContent = userData.clicksToday;
+            document.getElementById('streakDays').textContent = userData.streak;
+            document.getElementById('withdrawBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('userTotal').textContent = userData.totalEarnings.toFixed(2);
+            
+            // Update progress bar
+            const progress = (userData.clicksToday / DAILY_CLICK_LIMIT) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}% Complete`;
+            
+            // Update daily bonus display
+            const today = new Date().toDateString();
+            const bonusButton = document.getElementById('dailyBonus');
+            const bonusText = document.getElementById('bonusText');
+            const bonusTime = document.getElementById('bonusTime');
+            
+            if (userData.lastBonusClaim === today) {
+                bonusButton.style.opacity = '0.7';
+                bonusButton.style.cursor = 'not-allowed';
+                bonusText.textContent = 'Bonus already claimed today';
+                bonusTime.textContent = 'Come back tomorrow!';
+            } else {
+                bonusButton.style.opacity = '1';
+                bonusButton.style.cursor = 'pointer';
+                bonusText.textContent = `Click to claim ₹${10 + (userData.streak * 2)} daily bonus!`;
+                bonusTime.textContent = `Current streak: ${userData.streak} days`;
+            }
+            
+            // Update transaction list
+            renderTransactions(userData.transactions);
+        }
+
+        // Daily Reset System
+        function setupDailyCheck() {
+            const today = new Date().toDateString();
+            
+            // Check if it's a new day
+            if (userData.lastActiveDate !== today) {
+                // Reset daily counters
+                userData.clicksToday = 0;
+                userData.todayEarnings = 0;
+                userData.clickedBanners = {};
+                userData.lastActiveDate = today;
+                
+                // Save changes
+                saveUserData();
+                updateUI();
+                
+                // Show welcome message
+                const user = JSON.parse(localStorage.getItem('user'));
+                showAlert('info', `Good morning, ${user.name}! Daily counters reset.`);
+            }
+        }
+
+        // Leaderboard
+        function updateLeaderboard() {
+            // Simulated leaderboard data
+            const leaderboard = [
+                { name: 'You', earnings: 1250, rank: 1 },
+                { name: 'Alex', earnings: 850, rank: 2 },
+                { name: 'Sarah', earnings: 720, rank: 3 },
+                { name: 'Mike', earnings: 680, rank: 4 },
+                { name: 'Priya', earnings: 550, rank: 5 },
+                { name: 'John', earnings: 480, rank: 6 },
+                { name: 'Emma', earnings: 420, rank: 7 },
+                { name: 'Raj', earnings: 380, rank: 8 },
+                { name: 'Lisa', earnings: 320, rank: 9 },
+                { name: 'Tom', earnings: 290, rank: 10 }
+            ];
+            
+            // Update user's rank and earnings
+            const userEarnings = userData.totalEarnings;
+            document.getElementById('userRank').textContent = '1st';
+            document.getElementById('userTotal').textContent = userEarnings.toFixed(2);
+            
+            // Update leaderboard list
+            const listElement = document.getElementById('leaderboardList');
+            listElement.innerHTML = leaderboard.map(player => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: ${player.rank === 1 ? '#fef3c7' : '#f8fafc'}; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid ${player.rank <= 3 ? '#f59e0b' : '#e5e7eb'};">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-weight: bold; color: #4b5563; min-width: 30px;">#${player.rank}</span>
+                        <div>
+                            <div style="font-weight: 500;">${player.name}</div>
+                            <div style="font-size: 0.8rem; color: #6b7280;">${player.rank === 1 ? '🎯 Top Earner' : 'Active User'}</div>
+                        </div>
+                    </div>
+                    <div style="font-weight: bold; color: ${player.rank <= 3 ? '#92400e' : '#1f2937'};">
+                        ₹${player.earnings.toFixed(2)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Data Persistence
         function saveUserData() {
             localStorage.setItem('userData', JSON.stringify(userData));
         }
 
-        function updateUserData() {
-            document.getElementById('walletBalance').textContent = userData.balance.toFixed(2);
-            document.getElementById('totalEarnings').textContent = userData.totalEarnings.toFixed(2);
-            document.getElementById('totalClicks').textContent = userData.totalClicks;
-        }
-
-        function loadTransactionHistory() {
-            const transactionList = document.getElementById('transactionList');
-            transactionList.innerHTML = '';
-            
-            if (userData.transactions.length === 0) {
-                transactionList.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 20px;">No transactions yet</p>';
-                return;
-            }
-            
-            userData.transactions.forEach(transaction => {
-                const item = document.createElement('div');
-                item.className = 'transaction-item';
-                
-                const typeIcon = transaction.type === 'credit' ? 'fa-plus-circle' : 'fa-minus-circle';
-                const typeClass = transaction.type === 'credit' ? 'positive' : 'negative';
-                const sign = transaction.type === 'credit' ? '+' : '-';
-                
-                item.innerHTML = `
-                    <div class="transaction-type">
-                        <i class="fas ${typeIcon} ${typeClass}"></i>
-                        <span>${transaction.description}</span>
-                    </div>
-                    <div class="transaction-amount ${typeClass}">
-                        ${sign}₹${transaction.amount.toFixed(2)}
-                    </div>
-                `;
-                
-                transactionList.appendChild(item);
-            });
-        }
-
-        // UI helper functions
-        function showLogin() {
-            document.getElementById('signupModal').classList.remove('active');
-            document.getElementById('loginModal').classList.add('active');
-        }
-
-        function showSignup() {
-            document.getElementById('loginModal').classList.remove('active');
-            document.getElementById('signupModal').classList.add('active');
-        }
-
-        function showMainApp() {
-            document.getElementById('loginModal').classList.remove('active');
-            document.getElementById('signupModal').classList.remove('active');
-            document.getElementById('mainContainer').style.display = 'block';
-        }
-
+        // Tab Navigation
         function showTab(tabName) {
             // Hide all tabs
             document.querySelectorAll('.content').forEach(tab => {
@@ -1170,59 +1435,44 @@
             // Add active class to clicked nav button
             event.target.classList.add('active');
             
-            // Load data for the tab
-            if (tabName === 'history') {
-                loadTransactionHistory();
-            } else if (tabName === 'backend') {
-                checkBackendStatus();
+            // Special tab handling
+            if (tabName === 'leaderboard') {
+                updateLeaderboard();
             }
         }
 
+        // Alert System
         function showAlert(type, message) {
             const alert = document.getElementById(type + 'Alert');
             const messageSpan = document.getElementById(type + 'Message');
             messageSpan.textContent = message;
             alert.style.display = 'block';
             
+            // Auto-hide after 5 seconds
             setTimeout(() => {
                 alert.style.display = 'none';
             }, 5000);
         }
 
+        // Logout
         function logout() {
-            localStorage.removeItem('user');
-            localStorage.removeItem('userData');
-            window.location.reload();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('userData');
+                window.location.reload();
+            }
         }
 
-        // Backend UI helpers
-        function showBackendLoading(show) {
-            document.getElementById('backendLoading').style.display = show ? 'block' : 'none';
+        // Show main app
+        function showMainApp() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('mainContainer').style.display = 'block';
         }
 
-        function showBackendResult(data) {
-            const resultEl = document.getElementById('backendResult');
-            const dataEl = document.getElementById('responseData');
-            dataEl.textContent = JSON.stringify(data, null, 2);
-            resultEl.classList.add('active');
-        }
-
-        function showBackendError(message) {
-            const errorEl = document.getElementById('backendError');
-            errorEl.textContent = message;
-            errorEl.style.display = 'block';
-        }
-
-        function hideBackendError() {
-            document.getElementById('backendError').style.display = 'none';
-        }
-
-        // Copy backend URL
-        function copyBackendUrl() {
-            const url = document.getElementById('backendUrl').textContent;
-            navigator.clipboard.writeText(url);
-            showAlert('success', 'Backend URL copied to clipboard!');
+        function showLogin() {
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('loginModal').classList.add('active');
         }
     </script>
 </body>
-    </html>
+</html>
