@@ -212,6 +212,7 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
         }
 
         .banner:hover {
@@ -262,36 +263,6 @@
         .backend-status.offline {
             background: #f8d7da;
             color: #721c24;
-        }
-
-        /* Result Display */
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            text-align: left;
-            display: none;
-        }
-
-        .result.active {
-            display: block;
-        }
-
-        .loading {
-            color: #667eea;
-            margin: 20px 0;
-            display: none;
-            text-align: center;
-        }
-
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
         }
 
         /* Withdrawal Section */
@@ -531,44 +502,6 @@
             opacity: 0.8;
         }
 
-        /* Redirect Modal */
-        .redirect-modal {
-            text-align: center;
-        }
-
-        .redirect-modal h3 {
-            color: #4f46e5;
-            margin-bottom: 15px;
-        }
-
-        .redirect-modal p {
-            margin-bottom: 20px;
-            color: #6b7280;
-        }
-
-        .countdown {
-            font-size: 2rem;
-            color: #ef4444;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .options {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .skip-btn {
-            background: #e5e7eb;
-            color: #6b7280;
-        }
-
-        .skip-btn:hover {
-            background: #d1d5db;
-        }
-
         /* Alert Messages */
         .alert {
             padding: 15px 20px;
@@ -593,15 +526,6 @@
             background: #dbeafe;
             color: #1e40af;
             border-left: 4px solid #3b82f6;
-        }
-
-        /* Backend Test Section */
-        .backend-test {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
         }
 
         /* Responsive Design */
@@ -630,6 +554,137 @@
                 padding: 15px 10px;
             }
         }
+
+        /* Bonus Banner Button Styles */
+        .bonus-banner {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-radius: 15px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bonus-banner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.3);
+        }
+
+        .bonus-banner i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .bonus-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .bonus-banner p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        /* Quick Links Section */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .quick-link {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .quick-link i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .quick-link h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .quick-link p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Direct Link Buttons */
+        .direct-link-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+
+        .direct-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .direct-link-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Banner Link Buttons */
+        .banner-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .link-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+        }
     </style>
 </head>
 <body>
@@ -657,34 +712,19 @@
                 </p>
 
                 <!-- Login Affiliate Link -->
-                <div class="tracking-link" onclick="redirectToAffiliateLink('login')">
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_login&ymid=direct_login" 
+                   target="_blank" 
+                   class="tracking-link">
                     <i class="fas fa-rocket"></i>
                     <h3>Earn Extra ₹500 Welcome Bonus!</h3>
                     <p>Click here to claim your exclusive welcome bonus offer</p>
-                    <div class="link-url" id="loginAffiliateLink">
-                        https://sgben.com/link?z=10482245&var={SOURCE_ID}&ymid={CLICK_ID}
+                    <div class="link-url">
+                        https://sgben.com/link?z=10482245&var=bannerearn_login&ymid=direct_login
                     </div>
-                    <button class="copy-btn" onclick="copyAffiliateLink('login', event)">
-                        <i class="fas fa-copy"></i> Copy Link
-                    </button>
                     <div class="tracking-info">
                         <p><i class="fas fa-info-circle"></i> This is an exclusive affiliate offer. You'll earn extra money by completing offers.</p>
                     </div>
-                    <div class="tracking-stats">
-                        <div class="stat-item">
-                            <div class="stat-value" id="loginClicksToday">0</div>
-                            <div class="stat-label">Clicks Today</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="loginTotalEarned">₹0</div>
-                            <div class="stat-label">Earned</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="loginSuccessRate">0%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -725,58 +765,19 @@
                 </p>
 
                 <!-- Signup Affiliate Link -->
-                <div class="tracking-link" onclick="redirectToAffiliateLink('signup')">
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_signup&ymid=direct_signup" 
+                   target="_blank" 
+                   class="tracking-link">
                     <i class="fas fa-gift"></i>
                     <h3>Special New User Bonus!</h3>
                     <p>New users get ₹500 extra bonus on their first withdrawal</p>
-                    <div class="link-url" id="signupAffiliateLink">
-                        https://sgben.com/link?z=10482245&var={SOURCE_ID}&ymid={CLICK_ID}
+                    <div class="link-url">
+                        https://sgben.com/link?z=10482245&var=bannerearn_signup&ymid=direct_signup
                     </div>
-                    <button class="copy-btn" onclick="copyAffiliateLink('signup', event)">
-                        <i class="fas fa-copy"></i> Copy Link
-                    </button>
                     <div class="tracking-info">
                         <p><i class="fas fa-star"></i> This bonus is available for new users only. Click to claim!</p>
                     </div>
-                    <div class="tracking-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">₹500</div>
-                            <div class="stat-label">Bonus Amount</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="usersClaimed">124</div>
-                            <div class="stat-label">Claimed Today</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">24h</div>
-                            <div class="stat-label">Limited Time</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Redirect Modal -->
-    <div class="modal" id="redirectModal">
-        <div class="modal-content redirect-modal">
-            <i class="fas fa-external-link-alt" style="font-size: 3rem; color: #4f46e5; margin-bottom: 20px;"></i>
-            <h3>You're About to Earn Extra!</h3>
-            <p>You'll be redirected to an affiliate offer where you can earn additional money. Completing offers will add bonus earnings to your BannerEarn wallet.</p>
-            
-            <div class="countdown" id="countdown">5</div>
-            
-            <p style="font-size: 0.9rem; color: #9ca3af;">
-                <i class="fas fa-info-circle"></i> You'll earn ₹1 from the banner click PLUS extra from the affiliate offer
-            </p>
-            
-            <div class="options">
-                <button class="btn skip-btn" onclick="skipRedirect()">
-                    <i class="fas fa-times"></i> Skip Offer
-                </button>
-                <button class="btn btn-primary" onclick="continueRedirect()">
-                    <i class="fas fa-rocket"></i> Continue Now
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -790,7 +791,6 @@
                 <h1>BannerEarn</h1>
             </div>
             <div class="user-info">
-                <div class="backend-status" id="apiStatus">Checking backend status...</div>
                 <div class="wallet">
                     <i class="fas fa-wallet"></i>
                     <span>Balance: ₹<span id="walletBalance">0</span></span>
@@ -809,8 +809,11 @@
             <button class="nav-tab" onclick="showTab('banners')">
                 <i class="fas fa-ad"></i> Click Banners
             </button>
+            <button class="nav-tab" onclick="showTab('quicklinks')">
+                <i class="fas fa-external-link-alt"></i> Quick Links
+            </button>
             <button class="nav-tab" onclick="showTab('withdraw')">
-                <i class="fas fa-rupee-sign"></i> Withdraw Money
+                <i class="fas fa-rupee-sign"></i> Withdraw
             </button>
             <button class="nav-tab" onclick="showTab('history')">
                 <i class="fas fa-history"></i> History
@@ -840,6 +843,15 @@
                     <p>Banners Clicked</p>
                 </div>
             </div>
+
+            <!-- Special Bonus Banner -->
+            <a href="https://sgben.com/link?z=10482245&var=bannerearn_bonus&ymid=bonus_banner" 
+               target="_blank" 
+               class="bonus-banner">
+                <i class="fas fa-gem"></i>
+                <h3>Limited Time Offer!</h3>
+                <p>Click here to get ₹1000 Instant Bonus + Extra Earnings on Every Click!</p>
+            </a>
 
             <!-- Affiliate Stats -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
@@ -886,8 +898,12 @@
                     <i class="fas fa-ad"></i> Click Banners to Earn Money
                 </h2>
                 
-                <!-- Banner 1 with affiliate link -->
-                <div class="banner" onclick="clickBanner(this, 'banner1')">
+                <!-- Banner 1 with direct link -->
+                <a href="https://3vetz.com/link?z=10482273&var=bannerearn_shopping&ymid=direct_click_1" 
+                   target="_blank" 
+                   class="banner" 
+                   onclick="trackBannerClick('banner1')">
+                    <div class="link-tag">Sponsored</div>
                     <div style="text-align: center;">
                         <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 5px;"></i>
                         <div>Shop Now - Up to 70% Off!</div>
@@ -895,10 +911,14 @@
                             <i class="fas fa-bolt"></i> +₹50 Bonus
                         </div>
                     </div>
-                </div>
+                </a>
                 
-                <!-- Banner 2 with affiliate link -->
-                <div class="banner" onclick="clickBanner(this, 'banner2')">
+                <!-- Banner 2 with direct link -->
+                <a href="https://3vetz.com/link?z=10482273&var=bannerearn_gaming&ymid=direct_click_2" 
+                   target="_blank" 
+                   class="banner" 
+                   onclick="trackBannerClick('banner2')">
+                    <div class="link-tag">Sponsored</div>
                     <div style="text-align: center;">
                         <i class="fas fa-gamepad" style="font-size: 2rem; margin-bottom: 5px;"></i>
                         <div>New Games Released - Play Now!</div>
@@ -906,10 +926,14 @@
                             <i class="fas fa-bolt"></i> +₹100 Bonus
                         </div>
                     </div>
-                </div>
+                </a>
                 
-                <!-- Banner 3 with affiliate link -->
-                <div class="banner" onclick="clickBanner(this, 'banner3')">
+                <!-- Banner 3 with direct link -->
+                <a href="https://3vetz.com/link?z=10482273&var=bannerearn_education&ymid=direct_click_3" 
+                   target="_blank" 
+                   class="banner" 
+                   onclick="trackBannerClick('banner3')">
+                    <div class="link-tag">Sponsored</div>
                     <div style="text-align: center;">
                         <i class="fas fa-graduation-cap" style="font-size: 2rem; margin-bottom: 5px;"></i>
                         <div>Learn Coding - Free Courses Available</div>
@@ -917,7 +941,22 @@
                             <i class="fas fa-bolt"></i> +₹150 Bonus
                         </div>
                     </div>
-                </div>
+                </a>
+                
+                <!-- Banner 4 with direct link -->
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_finance&ymid=direct_click_4" 
+                   target="_blank" 
+                   class="banner" 
+                   onclick="trackBannerClick('banner4')">
+                    <div class="link-tag">Premium</div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                        <div>Invest Now - High Returns Guaranteed!</div>
+                        <div class="banner-affiliate">
+                            <i class="fas fa-bolt"></i> +₹200 Bonus
+                        </div>
+                    </div>
+                </a>
                 
                 <div class="click-info">
                     <i class="fas fa-info-circle"></i> 
@@ -932,22 +971,108 @@
                 </button>
             </div>
 
-            <!-- Affiliate Earnings Info -->
-            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 15px; margin-top: 30px;">
-                <h3 style="color: #0369a1; margin-bottom: 15px;">
-                    <i class="fas fa-gift"></i> Double Your Earnings!
+            <!-- Direct Link Buttons -->
+            <div style="margin-top: 40px;">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #1f2937;">
+                    <i class="fas fa-external-link-square-alt"></i> Direct Earning Links
                 </h3>
-                <p style="color: #475569; line-height: 1.6; margin-bottom: 15px;">
-                    When you click a banner, you'll get:
+                
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_direct1&ymid=direct_earning_1" 
+                   target="_blank" 
+                   class="direct-link-btn">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Earn ₹100 Instantly - Click Here!</span>
+                </a>
+                
+                <a href="https://3vetz.com/link?z=10482273&var=bannerearn_direct2&ymid=direct_earning_2" 
+                   target="_blank" 
+                   class="direct-link-btn">
+                    <i class="fas fa-gift"></i>
+                    <span>Get ₹50 Welcome Bonus - Click Now!</span>
+                </a>
+                
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_direct3&ymid=direct_earning_3" 
+                   target="_blank" 
+                   class="direct-link-btn">
+                    <i class="fas fa-trophy"></i>
+                    <span>Special Offer: ₹75 Extra Earnings!</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Links Tab -->
+        <div class="content" id="quicklinksTab">
+            <div class="withdrawal-section">
+                <h2><i class="fas fa-external-link-alt"></i> Quick Earning Links</h2>
+                <p style="color: #6b7280; margin-bottom: 30px; text-align: center;">
+                    Click any link below to start earning instantly. All links open in new tabs.
                 </p>
-                <ul style="color: #475569; line-height: 1.6; margin-bottom: 15px;">
-                    <li>₹1 instantly added to your wallet</li>
-                    <li>Option to complete affiliate offers for extra money (₹50-₹150 per offer)</li>
-                    <li>Affiliate earnings are added to your BannerEarn balance</li>
-                </ul>
-                <p style="color: #dc2626; font-weight: bold;">
-                    <i class="fas fa-exclamation-triangle"></i> Remember: Affiliate offers are optional but highly rewarding!
-                </p>
+                
+                <div class="quick-links">
+                    <!-- Quick Link 1 -->
+                    <a href="https://sgben.com/link?z=10482245&var=bannerearn_quick1&ymid=quick_link_1" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>Online Shopping</h4>
+                        <p>Earn up to ₹300 per purchase</p>
+                    </a>
+                    
+                    <!-- Quick Link 2 -->
+                    <a href="https://3vetz.com/link?z=10482273&var=bannerearn_quick2&ymid=quick_link_2" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Mobile Recharge</h4>
+                        <p>Get cashback on every recharge</p>
+                    </a>
+                    
+                    <!-- Quick Link 3 -->
+                    <a href="https://sgben.com/link?z=10482245&var=bannerearn_quick3&ymid=quick_link_3" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-plane"></i>
+                        <h4>Travel Booking</h4>
+                        <p>Earn ₹500 on hotel bookings</p>
+                    </a>
+                    
+                    <!-- Quick Link 4 -->
+                    <a href="https://3vetz.com/link?z=10482273&var=bannerearn_quick4&ymid=quick_link_4" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-utensils"></i>
+                        <h4>Food Delivery</h4>
+                        <p>₹100 cashback on first order</p>
+                    </a>
+                    
+                    <!-- Quick Link 5 -->
+                    <a href="https://sgben.com/link?z=10482245&var=bannerearn_quick5&ymid=quick_link_5" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-film"></i>
+                        <h4>Streaming Services</h4>
+                        <p>Earn ₹250 on subscriptions</p>
+                    </a>
+                    
+                    <!-- Quick Link 6 -->
+                    <a href="https://3vetz.com/link?z=10482273&var=bannerearn_quick6&ymid=quick_link_6" 
+                       target="_blank" 
+                       class="quick-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Online Courses</h4>
+                        <p>Get ₹150 on course enrollment</p>
+                    </a>
+                </div>
+                
+                <!-- Special Mega Bonus Link -->
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_megabonus&ymid=mega_bonus_link" 
+                   target="_blank" 
+                   class="bonus-banner" 
+                   style="margin-top: 30px;">
+                    <i class="fas fa-crown"></i>
+                    <h3>MEGA BONUS OFFER!</h3>
+                    <p>Click here for ₹2000 Instant Bonus + Triple Earnings on All Clicks!</p>
+                </a>
             </div>
         </div>
 
@@ -1015,6 +1140,15 @@
                         </button>
                     </div>
                 </form>
+                
+                <!-- Extra Earning Link -->
+                <a href="https://sgben.com/link?z=10482245&var=bannerearn_withdrawbonus&ymid=withdraw_bonus" 
+                   target="_blank" 
+                   class="direct-link-btn" 
+                   style="margin-top: 30px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                    <i class="fas fa-bolt"></i>
+                    <span>Need more balance? Click here for instant ₹500 bonus!</span>
+                </a>
             </div>
         </div>
 
@@ -1052,26 +1186,6 @@
             transactions: []
         };
 
-        // Affiliate Links
-        const LOGIN_AFFILIATE_LINK = 'https://sgben.com/link?z=10482245&var={SOURCE_ID}&ymid={CLICK_ID}';
-        const BANNER_AFFILIATE_LINK = 'https://3vetz.com/link?z=10482273&var={SOURCE_ID}&ymid={CLICK_ID}';
-        const EARNINGS_PER_CLICK = 1;
-
-        // Variables for redirect modal
-        let redirectUrl = '';
-        let countdownInterval;
-        let currentBanner = null;
-        let currentBannerId = '';
-
-        // Tracking stats
-        let trackingStats = {
-            loginClicks: 0,
-            signupClicks: 0,
-            bannerClicks: 0,
-            totalEarned: 0,
-            lastClickDate: new Date().toDateString()
-        };
-
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is logged in
@@ -1083,9 +1197,6 @@
                 showLogin();
             }
 
-            // Initialize tracking stats
-            initTrackingStats();
-
             // Form event listeners
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
             document.getElementById('signupForm').addEventListener('submit', handleSignup);
@@ -1096,66 +1207,14 @@
             simulateDemoConversions();
         });
 
-        // Initialize tracking stats
-        function initTrackingStats() {
-            const savedStats = localStorage.getItem('trackingStats');
-            if (savedStats) {
-                trackingStats = JSON.parse(savedStats);
-            }
-            
-            // Check if it's a new day
-            const today = new Date().toDateString();
-            if (trackingStats.lastClickDate !== today) {
-                trackingStats.loginClicks = 0;
-                trackingStats.signupClicks = 0;
-                trackingStats.bannerClicks = 0;
-                trackingStats.lastClickDate = today;
-                saveTrackingStats();
-            }
-            
-            updateTrackingUI();
-        }
-
-        // Update tracking UI
-        function updateTrackingUI() {
-            // Update login page stats
-            const loginClicksToday = document.getElementById('loginClicksToday');
-            const loginTotalEarned = document.getElementById('loginTotalEarned');
-            const loginSuccessRate = document.getElementById('loginSuccessRate');
-            const usersClaimed = document.getElementById('usersClaimed');
-            
-            if (loginClicksToday) {
-                loginClicksToday.textContent = trackingStats.loginClicks;
-                loginTotalEarned.textContent = '₹' + trackingStats.totalEarned;
-                
-                // Calculate success rate
-                const totalClicks = trackingStats.loginClicks + trackingStats.signupClicks + trackingStats.bannerClicks;
-                const successRate = totalClicks > 0 ? 
-                    Math.round((trackingStats.totalEarned / totalClicks) * 100) : 0;
-                loginSuccessRate.textContent = successRate + '%';
-                
-                // Generate random users claimed
-                if (usersClaimed) {
-                    const baseUsers = 124;
-                    const randomFactor = Math.floor(Math.random() * 50);
-                    usersClaimed.textContent = baseUsers + randomFactor;
-                }
-            }
-        }
-
-        // Save tracking stats
-        function saveTrackingStats() {
-            localStorage.setItem('trackingStats', JSON.stringify(trackingStats));
-        }
-
-        // Banner click function
-        function clickBanner(bannerElement, bannerId) {
+        // Track banner click
+        function trackBannerClick(bannerId) {
             const today = new Date().toDateString();
             
             // Check if user has already clicked today
             if (userData.lastClickDate === today && userData.clicksToday >= 3) {
                 showAlert('info', 'You have reached your daily limit of 3 clicks. Come back tomorrow!');
-                return;
+                return false;
             }
             
             // Reset daily clicks if it's a new day
@@ -1164,191 +1223,36 @@
                 userData.lastClickDate = today;
             }
             
-            // Store current banner for redirect
-            currentBanner = bannerElement;
-            currentBannerId = bannerId;
-            
-            // Show redirect modal
-            showRedirectModal();
-        }
-
-        // Show redirect modal
-        function showRedirectModal() {
-            // Generate affiliate URL for this banner
-            const clickId = 'banner_click_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            const sourceId = 'bannerearn_' + currentBannerId;
-            
-            redirectUrl = BANNER_AFFILIATE_LINK
-                .replace('{SOURCE_ID}', encodeURIComponent(sourceId))
-                .replace('{CLICK_ID}', encodeURIComponent(clickId));
-            
-            // Show modal
-            document.getElementById('redirectModal').classList.add('active');
-            
-            // Start countdown
-            let count = 5;
-            const countdownEl = document.getElementById('countdown');
-            countdownEl.textContent = count;
-            
-            countdownInterval = setInterval(() => {
-                count--;
-                countdownEl.textContent = count;
-                
-                if (count <= 0) {
-                    clearInterval(countdownInterval);
-                    continueRedirect();
-                }
-            }, 1000);
-        }
-
-        // Continue with redirect
-        function continueRedirect() {
-            clearInterval(countdownInterval);
-            
-            // Hide modal
-            document.getElementById('redirectModal').classList.remove('active');
-            
-            // Process banner click
-            processBannerClick(currentBanner);
-            
-            // Update affiliate stats
-            userData.affiliateClicks++;
-            trackingStats.bannerClicks++;
-            saveUserData();
-            saveTrackingStats();
-            updateAffiliateStats();
-            updateTrackingUI();
-            
-            // Save click to history
-            const clickData = {
-                id: Date.now(),
-                type: 'affiliate_click',
-                banner: currentBannerId,
-                url: redirectUrl,
-                timestamp: new Date().toISOString()
-            };
-            
-            let affiliateHistory = JSON.parse(localStorage.getItem('affiliateHistory') || '[]');
-            affiliateHistory.push(clickData);
-            localStorage.setItem('affiliateHistory', JSON.stringify(affiliateHistory.slice(-100)));
-            
-            // Open affiliate link in new tab
-            window.open(redirectUrl, '_blank');
-            
-            // Show success message
-            showAlert('success', 'Banner clicked! ₹1 added to wallet. Check the new tab for extra earnings opportunity!');
-        }
-
-        // Skip redirect
-        function skipRedirect() {
-            clearInterval(countdownInterval);
-            
-            // Hide modal
-            document.getElementById('redirectModal').classList.remove('active');
-            
-            // Process banner click without affiliate
-            processBannerClick(currentBanner);
-            
-            // Show message
-            showAlert('info', 'Banner clicked! ₹1 added to wallet. You can try affiliate offers next time for extra earnings.');
-        }
-
-        // Process banner click
-        function processBannerClick(bannerElement) {
-            // Mark banner as clicked
-            bannerElement.classList.add('clicked');
-            
             // Update earnings
             userData.clicksToday++;
             userData.totalClicks++;
-            userData.balance += EARNINGS_PER_CLICK;
-            userData.totalEarnings += EARNINGS_PER_CLICK;
+            userData.balance += 1;
+            userData.totalEarnings += 1;
+            userData.affiliateClicks++;
             
             // Add transaction
             userData.transactions.unshift({
                 id: Date.now(),
                 type: 'credit',
-                amount: EARNINGS_PER_CLICK,
-                description: 'Banner Click',
+                amount: 1,
+                description: 'Banner Click: ' + bannerId,
                 date: new Date().toISOString(),
                 category: 'banner'
             });
             
             // Update UI
             updateUserData();
-            
-            // Disable banner for 5 seconds
-            bannerElement.style.pointerEvents = 'none';
-            setTimeout(() => {
-                bannerElement.style.pointerEvents = 'auto';
-            }, 5000);
+            updateAffiliateStats();
             
             // Save data
             saveUserData();
-        }
-
-        // Redirect to affiliate link from login/signup
-        function redirectToAffiliateLink(type) {
-            const clickId = type + '_click_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            const sourceId = 'bannerearn_' + type;
             
-            let url = LOGIN_AFFILIATE_LINK
-                .replace('{SOURCE_ID}', encodeURIComponent(sourceId))
-                .replace('{CLICK_ID}', encodeURIComponent(clickId));
+            // Show success message
+            setTimeout(() => {
+                showAlert('success', '₹1 added to your wallet! Check the new tab for extra earnings.');
+            }, 100);
             
-            // Update tracking stats
-            if (type === 'login') {
-                trackingStats.loginClicks++;
-            } else {
-                trackingStats.signupClicks++;
-            }
-            saveTrackingStats();
-            updateTrackingUI();
-            
-            // Open the affiliate link in a new tab
-            window.open(url, '_blank');
-            
-            // Show confirmation message
-            showAlert('info', 'Redirecting to affiliate offer... You can continue with BannerEarn in this tab.');
-            
-            // Track the click
-            const clickData = {
-                id: clickId,
-                source: sourceId,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
-            };
-            
-            let clickHistory = JSON.parse(localStorage.getItem('affiliateClicks') || '[]');
-            clickHistory.push(clickData);
-            localStorage.setItem('affiliateClicks', JSON.stringify(clickHistory.slice(-100)));
-        }
-
-        // Copy affiliate link
-        function copyAffiliateLink(type, event) {
-            event.stopPropagation();
-            
-            const sourceId = 'bannerearn_' + type;
-            const clickId = type + '_copy_' + Date.now();
-            
-            let link = LOGIN_AFFILIATE_LINK
-                .replace('{SOURCE_ID}', sourceId)
-                .replace('{CLICK_ID}', clickId);
-            
-            navigator.clipboard.writeText(link).then(() => {
-                showAlert('success', 'Affiliate link copied to clipboard!');
-                
-                // Update tracking stats
-                if (type === 'login') {
-                    trackingStats.loginClicks++;
-                } else {
-                    trackingStats.signupClicks++;
-                }
-                saveTrackingStats();
-                updateTrackingUI();
-            }).catch(err => {
-                showAlert('error', 'Failed to copy link: ' + err);
-            });
+            return true;
         }
 
         // Update affiliate stats
@@ -1356,40 +1260,6 @@
             document.getElementById('affiliateEarnings').textContent = userData.affiliateEarnings.toFixed(2);
             document.getElementById('affiliateClicks').textContent = userData.affiliateClicks;
             document.getElementById('affiliateConversions').textContent = userData.affiliateConversions;
-        }
-
-        // Record affiliate conversion
-        function recordAffiliateConversion(amount) {
-            userData.affiliateConversions++;
-            userData.affiliateEarnings += amount;
-            userData.balance += amount;
-            userData.totalEarnings += amount;
-            trackingStats.totalEarned += amount;
-            
-            // Add transaction
-            userData.transactions.unshift({
-                id: Date.now(),
-                type: 'credit',
-                amount: amount,
-                description: 'Affiliate Bonus',
-                date: new Date().toISOString(),
-                category: 'affiliate'
-            });
-            
-            // Save and update
-            saveUserData();
-            saveTrackingStats();
-            updateUserData();
-            updateAffiliateStats();
-            updateTrackingUI();
-            
-            // Show success message
-            showAlert('success', `🎉 Congratulations! You earned ₹${amount} from affiliate offer!`);
-            
-            // Load transaction history if on history tab
-            if (document.getElementById('historyTab').classList.contains('active')) {
-                loadTransactionHistory();
-            }
         }
 
         // Load user data
@@ -1474,10 +1344,6 @@
 
         // Refresh banners
         function refreshBanners() {
-            const banners = document.querySelectorAll('.banner');
-            banners.forEach(banner => {
-                banner.classList.remove('clicked');
-            });
             showAlert('success', 'Banners refreshed! You can click them again.');
         }
 
@@ -1668,6 +1534,37 @@
                     const amount = Math.floor(Math.random() * 150) + 50;
                     recordAffiliateConversion(amount);
                 }, Math.random() * 5000 + 5000);
+            }
+        }
+
+        // Record affiliate conversion
+        function recordAffiliateConversion(amount) {
+            userData.affiliateConversions++;
+            userData.affiliateEarnings += amount;
+            userData.balance += amount;
+            userData.totalEarnings += amount;
+            
+            // Add transaction
+            userData.transactions.unshift({
+                id: Date.now(),
+                type: 'credit',
+                amount: amount,
+                description: 'Affiliate Bonus',
+                date: new Date().toISOString(),
+                category: 'affiliate'
+            });
+            
+            // Save and update
+            saveUserData();
+            updateUserData();
+            updateAffiliateStats();
+            
+            // Show success message
+            showAlert('success', `🎉 Congratulations! You earned ₹${amount} from affiliate offer!`);
+            
+            // Load transaction history if on history tab
+            if (document.getElementById('historyTab').classList.contains('active')) {
+                loadTransactionHistory();
             }
         }
     </script>
