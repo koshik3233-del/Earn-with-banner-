@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BannerEarn - Earn Money by Clicking Ads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         * {
             margin: 0;
@@ -56,6 +58,19 @@
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
         }
 
         .wallet {
@@ -170,6 +185,93 @@
             color: white;
         }
 
+        /* Google Sign-In Button */
+        .gsi-material-button {
+            background-color: white;
+            background-image: none;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            color: #3c4043;
+            cursor: pointer;
+            font-family: "Google Sans", arial, sans-serif;
+            font-size: 14px;
+            height: 40px;
+            letter-spacing: 0.25px;
+            outline: none;
+            overflow: hidden;
+            padding: 0 12px;
+            position: relative;
+            text-align: center;
+            transition: background-color .218s, border-color .218s, box-shadow .218s;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: 100%;
+            max-width: 400px;
+            min-width: min-content;
+            margin: 10px 0;
+        }
+
+        .gsi-material-button .gsi-material-button-icon {
+            height: 20px;
+            margin-right: 12px;
+            min-width: 20px;
+            width: 20px;
+        }
+
+        .gsi-material-button .gsi-material-button-content-wrapper {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            height: 100%;
+            justify-content: space-between;
+            position: relative;
+            width: 100%;
+        }
+
+        .gsi-material-button .gsi-material-button-contents {
+            flex-grow: 1;
+            font-family: 'Roboto', arial, sans-serif;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: top;
+        }
+
+        .gsi-material-button .gsi-material-button-state {
+            transition: opacity .218s;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .gsi-material-button:disabled {
+            cursor: default;
+            background-color: #ffffff61;
+            border-color: #dadce0;
+        }
+
+        .gsi-material-button:disabled .gsi-material-button-contents {
+            opacity: 38%;
+        }
+
+        .gsi-material-button:disabled .gsi-material-button-icon {
+            opacity: 38%;
+        }
+
+        .gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+        .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 12%;
+        }
+
+        .gsi-material-button:not(:disabled):hover {
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+        }
+
         /* Earning Buttons Styles */
         .earning-buttons-container {
             display: grid;
@@ -207,6 +309,16 @@
 
         .earning-btn.clicked {
             background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .earning-btn.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .earning-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
         }
 
         .earning-amount {
@@ -471,9 +583,40 @@
                 min-width: 120px;
                 padding: 15px 10px;
             }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
 
-        /* Quick Links Section */
+        /* Dashboard Stats */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stats-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Quick Links */
         .quick-links {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -554,6 +697,48 @@
             max-width: 80%;
             text-align: center;
         }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #6b7280;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        /* Balance Sync Status */
+        .sync-status {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sync-status.syncing {
+            color: #f59e0b;
+        }
+
+        .sync-status.synced {
+            color: #10b981;
+        }
+
+        .sync-status.error {
+            color: #ef4444;
+        }
     </style>
 </head>
 <body>
@@ -562,8 +747,33 @@
         <div class="modal-content">
             <div class="auth-container">
                 <h2 style="text-align: center; margin-bottom: 30px; color: #4f46e5;">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                    <i class="fas fa-sign-in-alt"></i> Login to BannerEarn
                 </h2>
+                
+                <!-- Google Sign-In Button -->
+                <div id="g_id_onload"
+                     data-client_id="446243892340-kqdqcemfs53hllgda4qq4knak98j5qsb.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-login_uri=""
+                     data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-logo_alignment="left"
+                     data-width="400">
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Email Login Form -->
                 <form class="auth-form" id="loginForm">
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
@@ -575,9 +785,10 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-sign-in-alt"></i> Login
+                        <i class="fas fa-sign-in-alt"></i> Login with Email
                     </button>
                 </form>
+                
                 <p style="text-align: center; margin-top: 20px;">
                     Don't have an account? 
                     <a href="#" onclick="showSignup()" style="color: #4f46e5; font-weight: 600;">Sign Up</a>
@@ -591,8 +802,25 @@
         <div class="modal-content">
             <div class="auth-container">
                 <h2 style="text-align: center; margin-bottom: 30px; color: #4f46e5;">
-                    <i class="fas fa-user-plus"></i> Sign Up
+                    <i class="fas fa-user-plus"></i> Join BannerEarn
                 </h2>
+                
+                <!-- Google Sign-In Button for Signup -->
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="signup_with"
+                     data-size="large"
+                     data-logo_alignment="left"
+                     data-width="400">
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Email Signup Form -->
                 <form class="auth-form" id="signupForm">
                     <div class="form-group">
                         <label for="signupName">Full Name</label>
@@ -619,6 +847,7 @@
                         <i class="fas fa-user-plus"></i> Create Account
                     </button>
                 </form>
+                
                 <p style="text-align: center; margin-top: 20px;">
                     Already have an account? 
                     <a href="#" onclick="showLogin()" style="color: #4f46e5; font-weight: 600;">Login</a>
@@ -636,6 +865,15 @@
                 <h1>BannerEarn</h1>
             </div>
             <div class="user-info">
+                <div class="user-profile" id="userProfile">
+                    <img src="" alt="User Avatar" class="user-avatar" id="userAvatar">
+                    <div>
+                        <div style="font-weight: bold;" id="userName"></div>
+                        <div class="sync-status" id="syncStatus">
+                            <i class="fas fa-sync-alt"></i> Synced
+                        </div>
+                    </div>
+                </div>
                 <div class="wallet">
                     <i class="fas fa-wallet"></i>
                     <span>Balance: ₹<span id="walletBalance">0</span></span>
@@ -654,7 +892,7 @@
             <button class="nav-tab" onclick="showTab('banners')">
                 <i class="fas fa-ad"></i> Click Banners
             </button>
-            <button class="nav-tab" onclick="showTab('quicklinks')">
+            <button class="nav-tab" onclick="showTab('links')">
                 <i class="fas fa-external-link-alt"></i> More Links
             </button>
             <button class="nav-tab" onclick="showTab('withdraw')">
@@ -687,7 +925,7 @@
                 <!-- Earning Buttons Container -->
                 <div class="earning-buttons-container">
                     <!-- Button 1: ₹5 per click -->
-                    <div class="earning-btn earning-btn-5" onclick="handleEarningClick(5, 'https://sgben.com/link?z=10482245&var=bannerearn_earning1&ymid=earning_5')" id="earningBtn5">
+                    <button class="earning-btn earning-btn-5" onclick="handleEarningClick(5, 'earningBtn5')" id="earningBtn5">
                         <div class="earning-tag">EASY</div>
                         <div class="earning-amount">₹5</div>
                         <div class="earning-info">Per Click</div>
@@ -697,10 +935,10 @@
                         <div class="success-animation" id="success5">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                    </div>
+                    </button>
                     
                     <!-- Button 2: ₹8 per click -->
-                    <div class="earning-btn earning-btn-8" onclick="handleEarningClick(8, 'https://3vetz.com/link?z=10482273&var=bannerearn_earning2&ymid=earning_8')" id="earningBtn8">
+                    <button class="earning-btn earning-btn-8" onclick="handleEarningClick(8, 'earningBtn8')" id="earningBtn8">
                         <div class="earning-tag">PREMIUM</div>
                         <div class="earning-amount">₹8</div>
                         <div class="earning-info">Per Click</div>
@@ -710,26 +948,26 @@
                         <div class="success-animation" id="success8">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px; color: #6b7280; font-size: 0.9rem;">
                     <i class="fas fa-info-circle"></i> Money will be added to your wallet 2 seconds after clicking. Each button can be clicked once per hour.
                 </div>
 
-                <!-- Stats -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px;">
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; text-align: center;">
-                        <h3 style="color: #4f46e5; margin-bottom: 10px;">Total Earned</h3>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #10b981;">₹<span id="totalQuickEarnings">0</span></div>
+                <!-- Dashboard Stats -->
+                <div class="dashboard">
+                    <div class="stats-card">
+                        <h2>₹<span id="totalBalance">0</span></h2>
+                        <p>Total Balance</p>
                     </div>
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; text-align: center;">
-                        <h3 style="color: #4f46e5; margin-bottom: 10px;">Clicks Today</h3>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #8b5cf6;"><span id="quickClicksToday">0</span></div>
+                    <div class="stats-card">
+                        <h2><span id="todayEarnings">0</span></h2>
+                        <p>Earned Today</p>
                     </div>
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; text-align: center;">
-                        <h3 style="color: #4f46e5; margin-bottom: 10px;">Next Click In</h3>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #f59e0b;"><span id="nextClickTimer">Ready</span></div>
+                    <div class="stats-card">
+                        <h2><span id="totalClicks">0</span></h2>
+                        <p>Total Clicks</p>
                     </div>
                 </div>
             </div>
@@ -737,53 +975,53 @@
 
         <!-- Banners Tab -->
         <div class="content" id="bannersTab">
-            <div style="background: #f8fafc; border-radius: 15px; padding: 40px; text-align: center; margin-bottom: 30px;">
-                <h2 style="text-align: center; margin-bottom: 30px; color: #1f2937;">
-                    <i class="fas fa-ad"></i> Click Banners to Earn Money
-                </h2>
+            <div class="withdrawal-section">
+                <h2><i class="fas fa-ad"></i> Click Banners to Earn</h2>
                 
-                <!-- Banner 1 -->
-                <a href="https://3vetz.com/link?z=10482273&var=bannerearn_shopping&ymid=banner_click_1" 
-                   target="_blank" 
-                   style="display: block; width: 100%; max-width: 728px; height: 90px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 10px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; text-decoration: none;" 
-                   onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'" 
-                   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
-                   onclick="trackBannerClick('banner1')">
-                    <div style="position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 0.7rem;">Sponsored</div>
-                    <div style="text-align: center;">
-                        <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                        <div>Shop Now - Up to 70% Off!</div>
-                        <div style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7rem; opacity: 0.8; background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 10px;">
-                            <i class="fas fa-bolt"></i> +₹50 Bonus
+                <div style="background: #f8fafc; border-radius: 15px; padding: 40px; text-align: center; margin-bottom: 30px;">
+                    <!-- Banner 1 -->
+                    <a href="https://3vetz.com/link?z=10482273&var=bannerearn_shopping&ymid=banner_click_1" 
+                       target="_blank" 
+                       style="display: block; width: 100%; max-width: 728px; height: 90px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 10px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; text-decoration: none;" 
+                       onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'" 
+                       onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                       onclick="trackBannerClick('banner1')">
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 0.7rem;">Sponsored</div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                            <div>Shop Now - Up to 70% Off!</div>
+                            <div style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7rem; opacity: 0.8; background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 10px;">
+                                <i class="fas fa-bolt"></i> +₹50 Bonus
+                            </div>
                         </div>
-                    </div>
-                </a>
-                
-                <!-- Banner 2 -->
-                <a href="https://sgben.com/link?z=10482245&var=bannerearn_gaming&ymid=banner_click_2" 
-                   target="_blank" 
-                   style="display: block; width: 100%; max-width: 728px; height: 90px; background: linear-gradient(90deg, #10b981, #059669); border-radius: 10px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; text-decoration: none;" 
-                   onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'" 
-                   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
-                   onclick="trackBannerClick('banner2')">
-                    <div style="position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 0.7rem;">Sponsored</div>
-                    <div style="text-align: center;">
-                        <i class="fas fa-gamepad" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                        <div>New Games Released - Play Now!</div>
-                        <div style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7rem; opacity: 0.8; background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 10px;">
-                            <i class="fas fa-bolt"></i> +₹100 Bonus
+                    </a>
+                    
+                    <!-- Banner 2 -->
+                    <a href="https://sgben.com/link?z=10482245&var=bannerearn_gaming&ymid=banner_click_2" 
+                       target="_blank" 
+                       style="display: block; width: 100%; max-width: 728px; height: 90px; background: linear-gradient(90deg, #10b981, #059669); border-radius: 10px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; text-decoration: none;" 
+                       onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'" 
+                       onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                       onclick="trackBannerClick('banner2')">
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 0.7rem;">Sponsored</div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-gamepad" style="font-size: 2rem; margin-bottom: 5px;"></i>
+                            <div>New Games Released - Play Now!</div>
+                            <div style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7rem; opacity: 0.8; background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 10px;">
+                                <i class="fas fa-bolt"></i> +₹100 Bonus
+                            </div>
                         </div>
+                    </a>
+                    
+                    <div style="color: #64748b; font-size: 0.9rem; margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i> Click banners to earn money. Each click opens in a new tab.
                     </div>
-                </a>
-                
-                <div style="color: #64748b; font-size: 0.9rem; margin-top: 10px;">
-                    <i class="fas fa-info-circle"></i> Click banners to earn money. Each click opens in a new tab.
                 </div>
             </div>
         </div>
 
-        <!-- Quick Links Tab -->
-        <div class="content" id="quicklinksTab">
+        <!-- More Links Tab -->
+        <div class="content" id="linksTab">
             <div class="withdrawal-section">
                 <h2><i class="fas fa-external-link-alt"></i> More Earning Links</h2>
                 <p style="color: #6b7280; margin-bottom: 30px; text-align: center;">
@@ -926,21 +1164,26 @@
     </div>
 
     <script>
+        // Google Client ID
+        const GOOGLE_CLIENT_ID = '446243892340-kqdqcemfs53hllgda4qq4knak98j5qsb.apps.googleusercontent.com';
+        
         // User data
         let userData = {
+            userId: null,
+            email: null,
+            name: null,
+            picture: null,
             balance: 0,
             totalEarnings: 0,
             totalClicks: 0,
-            quickEarnings: 0,
-            quickClicksToday: 0,
-            lastClickTime: null,
-            affiliateClicks: 0,
-            affiliateEarnings: 0,
-            transactions: [],
+            todayEarnings: 0,
+            todayClicks: 0,
+            lastClickDate: null,
             lastEarningClick: {
                 btn5: null,
                 btn8: null
-            }
+            },
+            transactions: []
         };
 
         // Affiliate Links
@@ -950,61 +1193,154 @@
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is logged in
-            const user = localStorage.getItem('user');
-            if (user) {
-                showMainApp();
-                loadUserData();
-                startTimer();
+            const savedUser = localStorage.getItem('userData');
+            if (savedUser) {
+                try {
+                    userData = JSON.parse(savedUser);
+                    
+                    // Check if it's a new day
+                    const today = new Date().toDateString();
+                    if (userData.lastClickDate !== today) {
+                        userData.todayEarnings = 0;
+                        userData.todayClicks = 0;
+                        userData.lastClickDate = today;
+                        saveUserData();
+                    }
+                    
+                    showMainApp();
+                    updateUI();
+                    startTimer();
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                    showLogin();
+                }
             } else {
                 showLogin();
             }
 
+            // Initialize Google Sign-In
+            initializeGoogleSignIn();
+
             // Form event listeners
-            document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            document.getElementById('loginForm').addEventListener('submit', handleEmailLogin);
+            document.getElementById('signupForm').addEventListener('submit', handleEmailSignup);
             document.getElementById('withdrawalForm').addEventListener('submit', handleWithdrawal);
             document.getElementById('withdrawMethod').addEventListener('change', handleWithdrawalMethodChange);
         });
 
+        // Initialize Google Sign-In
+        function initializeGoogleSignIn() {
+            window.google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleSignIn,
+                auto_select: false,
+                cancel_on_tap_outside: true
+            });
+            
+            window.google.accounts.id.renderButton(
+                document.getElementById('g_id_onload'),
+                { theme: 'outline', size: 'large' }
+            );
+            
+            window.google.accounts.id.prompt();
+        }
+
+        // Handle Google Sign-In
+        function handleGoogleSignIn(response) {
+            if (response.credential) {
+                // Decode JWT token
+                const decodedToken = parseJwt(response.credential);
+                
+                // Save user data
+                userData.userId = decodedToken.sub;
+                userData.email = decodedToken.email;
+                userData.name = decodedToken.name;
+                userData.picture = decodedToken.picture;
+                
+                // Initialize new user data
+                const today = new Date().toDateString();
+                userData.balance = 0;
+                userData.totalEarnings = 0;
+                userData.totalClicks = 0;
+                userData.todayEarnings = 0;
+                userData.todayClicks = 0;
+                userData.lastClickDate = today;
+                userData.transactions = [];
+                
+                // Save and show app
+                saveUserData();
+                showMainApp();
+                updateUI();
+                startTimer();
+                
+                showAlert('success', `Welcome to BannerEarn, ${userData.name}!`);
+            }
+        }
+
+        // Parse JWT token
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error parsing JWT:', e);
+                return {};
+            }
+        }
+
         // Handle earning button click
-        function handleEarningClick(amount, link) {
+        function handleEarningClick(amount, buttonId) {
             const today = new Date().toDateString();
             const now = Date.now();
-            const buttonId = amount === 5 ? 'btn5' : 'btn8';
+            const btnKey = amount === 5 ? 'btn5' : 'btn8';
+            const buttonEl = document.getElementById(buttonId);
+            
+            // Check if button is disabled
+            if (buttonEl.classList.contains('disabled')) {
+                return;
+            }
             
             // Check if button was clicked in last hour
-            if (userData.lastEarningClick[buttonId] && (now - userData.lastEarningClick[buttonId]) < 3600000) {
-                const timeLeft = Math.ceil((3600000 - (now - userData.lastEarningClick[buttonId])) / 60000);
+            if (userData.lastEarningClick[btnKey] && (now - userData.lastEarningClick[btnKey]) < 3600000) {
+                const timeLeft = Math.ceil((3600000 - (now - userData.lastEarningClick[btnKey])) / 60000);
                 showAlert('info', `Please wait ${timeLeft} minutes before clicking this button again.`);
                 return;
             }
             
             // Check daily limit (10 clicks per day)
-            if (userData.quickClicksToday >= 10) {
-                showAlert('info', 'You have reached your daily limit of 10 quick earnings. Come back tomorrow!');
+            if (userData.todayClicks >= 10) {
+                showAlert('info', 'You have reached your daily limit of 10 clicks. Come back tomorrow!');
                 return;
             }
             
             // Show loading animation
             const loadingEl = document.getElementById(`loading${amount}`);
-            const buttonEl = document.getElementById(`earningBtn${amount}`);
+            const successEl = document.getElementById(`success${amount}`);
             
             loadingEl.style.display = 'block';
             buttonEl.classList.add('clicked');
-            buttonEl.style.pointerEvents = 'none';
+            buttonEl.classList.add('disabled');
             
             // Open affiliate link in new tab
+            const link = amount === 5 ? LINK_5_RUPEES : LINK_8_RUPEES;
             window.open(link, '_blank');
+            
+            // Update sync status
+            updateSyncStatus('syncing');
             
             // Wait 2 seconds then add money
             setTimeout(() => {
                 // Add earnings
                 userData.balance += amount;
                 userData.totalEarnings += amount;
-                userData.quickEarnings += amount;
-                userData.quickClicksToday++;
-                userData.affiliateClicks++;
-                userData.lastEarningClick[buttonId] = now;
+                userData.todayEarnings += amount;
+                userData.totalClicks++;
+                userData.todayClicks++;
+                userData.lastEarningClick[btnKey] = now;
                 
                 // Add transaction
                 userData.transactions.unshift({
@@ -1017,12 +1353,10 @@
                 });
                 
                 // Update UI
-                updateUserData();
-                updateQuickStats();
+                updateUI();
                 
                 // Show success animation
                 loadingEl.style.display = 'none';
-                const successEl = document.getElementById(`success${amount}`);
                 successEl.style.display = 'block';
                 
                 // Show success message
@@ -1031,11 +1365,18 @@
                 // Save data
                 saveUserData();
                 
+                // Update sync status
+                updateSyncStatus('synced');
+                
                 // Reset button after 3 seconds
                 setTimeout(() => {
                     successEl.style.display = 'none';
                     buttonEl.classList.remove('clicked');
-                    buttonEl.style.pointerEvents = 'auto';
+                    
+                    // Enable button if cooldown is over
+                    if (userData.lastEarningClick[btnKey] && (Date.now() - userData.lastEarningClick[btnKey]) >= 3600000) {
+                        buttonEl.classList.remove('disabled');
+                    }
                 }, 3000);
                 
             }, 2000);
@@ -1043,10 +1384,6 @@
 
         // Track banner click
         function trackBannerClick(bannerId) {
-            // Update earnings
-            userData.totalClicks++;
-            userData.affiliateClicks++;
-            
             // Add transaction
             userData.transactions.unshift({
                 id: Date.now(),
@@ -1057,80 +1394,96 @@
                 category: 'banner'
             });
             
-            // Save data
-            saveUserData();
+            // Update sync status
+            updateSyncStatus('syncing');
             
-            // Show message
-            showAlert('info', 'Banner clicked! Check the new tab for earning opportunities.');
+            // Save data
+            setTimeout(() => {
+                saveUserData();
+                updateSyncStatus('synced');
+                showAlert('info', 'Banner clicked! Check the new tab for earning opportunities.');
+            }, 1000);
             
             return true;
         }
 
-        // Update quick stats
-        function updateQuickStats() {
-            document.getElementById('totalQuickEarnings').textContent = userData.quickEarnings.toFixed(2);
-            document.getElementById('quickClicksToday').textContent = userData.quickClicksToday;
+        // Update UI with user data
+        function updateUI() {
+            // Update user profile
+            document.getElementById('userName').textContent = userData.name || 'User';
+            if (userData.picture) {
+                document.getElementById('userAvatar').src = userData.picture;
+            }
+            
+            // Update wallet and stats
+            document.getElementById('walletBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('totalBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('todayEarnings').textContent = userData.todayEarnings.toFixed(2);
+            document.getElementById('totalClicks').textContent = userData.totalClicks;
+            
+            // Update button states
+            updateButtonStates();
+            
+            // Load transaction history
+            loadTransactionHistory();
         }
 
-        // Timer for next click
+        // Update button states based on cooldown
+        function updateButtonStates() {
+            const now = Date.now();
+            
+            // Check ₹5 button
+            const btn5 = document.getElementById('earningBtn5');
+            if (userData.lastEarningClick.btn5 && (now - userData.lastEarningClick.btn5) < 3600000) {
+                btn5.classList.add('disabled');
+            } else {
+                btn5.classList.remove('disabled');
+            }
+            
+            // Check ₹8 button
+            const btn8 = document.getElementById('earningBtn8');
+            if (userData.lastEarningClick.btn8 && (now - userData.lastEarningClick.btn8) < 3600000) {
+                btn8.classList.add('disabled');
+            } else {
+                btn8.classList.remove('disabled');
+            }
+        }
+
+        // Update sync status
+        function updateSyncStatus(status) {
+            const syncEl = document.getElementById('syncStatus');
+            syncEl.className = `sync-status ${status}`;
+            
+            switch(status) {
+                case 'syncing':
+                    syncEl.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Syncing...';
+                    break;
+                case 'synced':
+                    syncEl.innerHTML = '<i class="fas fa-check-circle"></i> Synced';
+                    break;
+                case 'error':
+                    syncEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Sync Error';
+                    break;
+            }
+        }
+
+        // Timer for button cooldown
         function startTimer() {
             setInterval(() => {
-                const now = Date.now();
-                let nextAvailable = null;
-                
-                // Check both buttons
-                if (userData.lastEarningClick.btn5 && (now - userData.lastEarningClick.btn5) < 3600000) {
-                    const timeLeft5 = 3600000 - (now - userData.lastEarningClick.btn5);
-                    if (!nextAvailable || timeLeft5 < nextAvailable) {
-                        nextAvailable = timeLeft5;
-                    }
-                }
-                
-                if (userData.lastEarningClick.btn8 && (now - userData.lastEarningClick.btn8) < 3600000) {
-                    const timeLeft8 = 3600000 - (now - userData.lastEarningClick.btn8);
-                    if (!nextAvailable || timeLeft8 < nextAvailable) {
-                        nextAvailable = timeLeft8;
-                    }
-                }
-                
-                if (nextAvailable) {
-                    const minutes = Math.ceil(nextAvailable / 60000);
-                    document.getElementById('nextClickTimer').textContent = `${minutes}m`;
-                    document.getElementById('nextClickTimer').style.color = '#ef4444';
-                } else {
-                    document.getElementById('nextClickTimer').textContent = 'Ready';
-                    document.getElementById('nextClickTimer').style.color = '#10b981';
-                }
+                updateButtonStates();
             }, 1000);
-        }
-
-        // Load user data
-        function loadUserData() {
-            const savedData = localStorage.getItem('userData');
-            if (savedData) {
-                userData = JSON.parse(savedData);
-                
-                // Reset daily clicks if new day
-                const today = new Date().toDateString();
-                if (localStorage.getItem('lastClickDate') !== today) {
-                    userData.quickClicksToday = 0;
-                    localStorage.setItem('lastClickDate', today);
-                }
-            }
-            updateUserData();
-            updateQuickStats();
-            loadTransactionHistory();
         }
 
         // Save user data
         function saveUserData() {
-            localStorage.setItem('userData', JSON.stringify(userData));
-        }
-
-        // Update user data in UI
-        function updateUserData() {
-            document.getElementById('walletBalance').textContent = userData.balance.toFixed(2);
-            document.getElementById('totalEarnings').textContent = userData.totalEarnings.toFixed(2);
+            try {
+                localStorage.setItem('userData', JSON.stringify(userData));
+                return true;
+            } catch (e) {
+                console.error('Error saving user data:', e);
+                updateSyncStatus('error');
+                return false;
+            }
         }
 
         // Load transaction history with filtering
@@ -1190,8 +1543,8 @@
             loadTransactionHistory(category);
         }
 
-        // Handle login
-        function handleLogin(e) {
+        // Handle email login
+        function handleEmailLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -1202,22 +1555,28 @@
             }
             
             // For demo purposes, accept any login
-            const user = {
-                email: email,
-                name: email.split('@')[0],
-                joined: new Date().toISOString()
-            };
+            const today = new Date().toDateString();
+            userData.userId = 'email_' + Date.now();
+            userData.email = email;
+            userData.name = email.split('@')[0];
+            userData.picture = null;
+            userData.balance = 0;
+            userData.totalEarnings = 0;
+            userData.totalClicks = 0;
+            userData.todayEarnings = 0;
+            userData.todayClicks = 0;
+            userData.lastClickDate = today;
+            userData.transactions = [];
             
-            localStorage.setItem('user', JSON.stringify(user));
-            localStorage.setItem('lastClickDate', new Date().toDateString());
+            saveUserData();
             showMainApp();
-            loadUserData();
+            updateUI();
             startTimer();
-            showAlert('success', `Welcome back, ${user.name}!`);
+            showAlert('success', `Welcome back, ${userData.name}!`);
         }
 
-        // Handle signup
-        function handleSignup(e) {
+        // Handle email signup
+        function handleEmailSignup(e) {
             e.preventDefault();
             const name = document.getElementById('signupName').value;
             const email = document.getElementById('signupEmail').value;
@@ -1237,17 +1596,22 @@
             }
             
             // Create user
-            const user = {
-                name: name,
-                email: email,
-                phone: phone,
-                joined: new Date().toISOString()
-            };
+            const today = new Date().toDateString();
+            userData.userId = 'email_' + Date.now();
+            userData.email = email;
+            userData.name = name;
+            userData.picture = null;
+            userData.balance = 0;
+            userData.totalEarnings = 0;
+            userData.totalClicks = 0;
+            userData.todayEarnings = 0;
+            userData.todayClicks = 0;
+            userData.lastClickDate = today;
+            userData.transactions = [];
             
-            localStorage.setItem('user', JSON.stringify(user));
-            localStorage.setItem('lastClickDate', new Date().toDateString());
+            saveUserData();
             showMainApp();
-            loadUserData();
+            updateUI();
             startTimer();
             showAlert('success', `Account created successfully, ${name}!`);
         }
@@ -1273,6 +1637,9 @@
                 return;
             }
             
+            // Update sync status
+            updateSyncStatus('syncing');
+            
             // Process withdrawal
             userData.balance -= amount;
             
@@ -1288,14 +1655,18 @@
             });
             
             // Update UI
-            updateUserData();
-            loadTransactionHistory();
+            updateUI();
             
             // Show success message
             showAlert('success', `Withdrawal request of ₹${amount} submitted successfully! Processing time: 24-48 hours.`);
             
             // Save data
             saveUserData();
+            
+            // Update sync status
+            setTimeout(() => {
+                updateSyncStatus('synced');
+            }, 1000);
             
             // Reset form
             document.getElementById('withdrawalForm').reset();
@@ -1367,11 +1738,20 @@
 
         // Logout
         function logout() {
-            localStorage.removeItem('user');
+            // Sign out from Google
+            if (window.google && window.google.accounts && window.google.accounts.id) {
+                window.google.accounts.id.disableAutoSelect();
+                window.google.accounts.id.revoke(userData.email, done => {
+                    console.log('Google account access revoked');
+                });
+            }
+            
+            // Clear local storage
             localStorage.removeItem('userData');
-            localStorage.removeItem('lastClickDate');
+            
+            // Redirect to login
             window.location.reload();
         }
     </script>
 </body>
-                            </html>
+    </html>
